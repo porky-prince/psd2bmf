@@ -1,0 +1,20 @@
+{
+  "name": "psd2bmf",
+  "version": "1.0.0",
+  "description": "Convert the PSD to BMF.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node-nightly --inspect-brk index.js",
+    "start": "node index.js"
+  },
+  "author": "Kay",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "psd": "^3.2.0",
+    "query-string": "^6.9.0",
+    "xml-js": "^1.6.11"
+  }
+}
