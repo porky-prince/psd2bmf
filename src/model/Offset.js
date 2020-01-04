@@ -1,8 +1,10 @@
 export default class Offset {
-    top = 0;
-    right = 0;
-    bottom = 0;
-    left = 0;
+    constructor() {
+        this.top = 0;
+        this.right = 0;
+        this.bottom = 0;
+        this.left = 0;
+    }
 
     parse(offset) {
         if (!offset) return;

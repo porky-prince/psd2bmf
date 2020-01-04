@@ -2,11 +2,14 @@ import Offset from "./Offset";
 import queryString from "query-string";
 
 export default class Option {
-    _offset = new Offset();
-    _size = 20;
-    _lineHeight = 20;
-    _xAdvance = 0;
-    _extInfo = null;
+    constructor(option) {
+        this._offset = new Offset();
+        this._size = 20;
+        this._lineHeight = 20;
+        this._xAdvance = 0;
+        this._extInfo = null;
+        this.parse(option);
+    }
 
     get offset() {
         return this._offset;
@@ -44,7 +47,7 @@ export default class Option {
         if (!option) return;
         const opt = queryString.parse(option);
         for (let attr in opt) {
-            if (opt.hasOwnProperty(attr) && attr in this) {
+            if (attr in this) {
                 this[attr] = opt[attr];
             }
         }
