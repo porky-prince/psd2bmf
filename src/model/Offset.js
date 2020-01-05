@@ -9,7 +9,7 @@ export default class Offset {
     parse(offset) {
         if (!offset) return;
         let arr = offset.split(',').map((val) => {
-            return Number(val);
+            return parseInt(val);
         });
         this.set.apply(this, arr);
     }

@@ -14,7 +14,9 @@
   "devDependencies": {
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-env": "^7.7.7"
+  },
+  "dependencies": {
     "psd": "^3.2.0",
     "query-string": "^6.9.0",
     "xml-js": "^1.6.11"

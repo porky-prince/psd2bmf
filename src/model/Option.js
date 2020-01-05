@@ -2,13 +2,32 @@ import Offset from "./Offset";
 import queryString from "query-string";
 
 export default class Option {
-    constructor(option) {
+    constructor(psdFilename, option) {
+        this._output = '';
+        this._filename = psdFilename;
         this._offset = new Offset();
+        this._splitSpace = 10;
         this._size = 20;
         this._lineHeight = 20;
         this._xAdvance = 0;
         this._extInfo = null;
         this.parse(option);
+    }
+
+    get output() {
+        return this._output;
+    }
+
+    set output(value) {
+        this._output = value;
+    }
+
+    get filename() {
+        return this._filename;
+    }
+
+    set filename(value) {
+        this._filename = value;
     }
 
     get offset() {
@@ -17,6 +36,14 @@ export default class Option {
 
     set offset(value) {
         this._offset.parse(value);
+    }
+
+    get splitSpace() {
+        return this._splitSpace;
+    }
+
+    set splitSpace(value) {
+        this._splitSpace = value;
     }
 
     get size() {
@@ -51,5 +78,8 @@ export default class Option {
                 this[attr] = opt[attr];
             }
         }
+    }
+
+    parseJson() {
     }
 }

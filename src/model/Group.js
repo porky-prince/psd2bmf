@@ -2,21 +2,34 @@ import Option from "./Option";
 import Layer from "./Layer";
 
 export default class Group {
-    constructor(data) {
+    constructor(psdFileName, data) {
+        this._index = NaN;
         this._group = null;
         this._option = null;
         this._layers = null;
-        this.init(data);
+        this.init(psdFileName, data);
     }
 
-    init(data) {
+    init(psdFileName, data) {
         let option = data.name;
         if (data.isGroup() && option.indexOf(Group.EXPORT_KEY) !== -1) {
             option = option.replace(Group.EXPORT_KEY, '');
             this._group = data;
-            this._option = new Option(option);
+            this._option = new Option(psdFileName, option);
             this.createLayers();
         }
+    }
+
+    get option() {
+        return this._option;
+    }
+
+    get index() {
+        return this._index;
+    }
+
+    set index(value) {
+        this._index = value;
     }
 
     canExport() {
