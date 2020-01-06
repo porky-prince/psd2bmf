@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<font>
+    <info face="" size="" bold="0" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1"
+          padding="0,0,0,0" spacing="0,0" outline="0"/>
+    <common lineHeight="" base="" scaleW="" scaleH="" pages="1" packed="0" alphaChnl="1" redChnl="0"
+            greenChnl="0" blueChnl="0"/>
+    <pages>
+        <page id="0" file=""/>
+    </pages>
+    <chars count="">
+        <char id="" x="" y="" width="" height="" xoffset="" yoffset="" xadvance="0" page="0" chnl="0"/>
+    </chars>
+</font>

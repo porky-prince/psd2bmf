@@ -1,6 +1,8 @@
 import Option from "./Option";
 import Layer from "./Layer";
 
+const EXPORT_KEY = 'export?';
+
 export default class Group {
     constructor(psdFileName, data) {
         this._index = NaN;
@@ -12,8 +14,8 @@ export default class Group {
 
     init(psdFileName, data) {
         let option = data.name;
-        if (data.isGroup() && option.indexOf(Group.EXPORT_KEY) !== -1) {
-            option = option.replace(Group.EXPORT_KEY, '');
+        if (data.isGroup() && option.indexOf(EXPORT_KEY) !== -1) {
+            option = option.replace(EXPORT_KEY, '');
             this._group = data;
             this._option = new Option(psdFileName, option);
             this.createLayers();
@@ -49,5 +51,3 @@ export default class Group {
         return this._layers;
     }
 }
-
-Group.EXPORT_KEY = 'export?';

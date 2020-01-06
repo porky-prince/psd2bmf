@@ -1,17 +1,33 @@
 import Offset from "./Offset";
-import queryString from "query-string";
+import { parseExportArgs } from "../utils";
 
 export default class Option {
     constructor(psdFilename, option) {
+        this._input = '';
         this._output = '';
         this._filename = psdFilename;
         this._offset = new Offset();
         this._splitSpace = 10;
-        this._size = 20;
-        this._lineHeight = 20;
-        this._xAdvance = 0;
         this._extInfo = null;
+
+        // 生成fnt配置参数
+        this._bmfTemp = '';
+        this._width = NaN;
+        this._height = NaN;
+        this._size = NaN;
+        this._lineHeight = NaN;
+        this._base = NaN;
+        this._maxWidth = 1024;
+        this._maxHeight = 1024;
         this.parse(option);
+    }
+
+    get input() {
+        return this._input;
+    }
+
+    set input(value) {
+        this._input = value;
     }
 
     get output() {
@@ -43,7 +59,20 @@ export default class Option {
     }
 
     set splitSpace(value) {
-        this._splitSpace = value;
+        if (value > 0) {
+            if (value < this._splitSpace / 2) {
+                console.warn("The splitSpace is small.");
+            }
+            this._splitSpace = value;
+        }
+    }
+
+    get bmfTemp() {
+        return this._bmfTemp;
+    }
+
+    set bmfTemp(value) {
+        this._bmfTemp = value;
     }
 
     get size() {
@@ -51,7 +80,7 @@ export default class Option {
     }
 
     set size(value) {
-        this._size = value;
+        if (value > 0) this._size = value;
     }
 
     get lineHeight() {
@@ -59,27 +88,22 @@ export default class Option {
     }
 
     set lineHeight(value) {
-        this._lineHeight = value;
-    }
-
-    get xAdvance() {
-        return this._xAdvance;
-    }
-
-    set xAdvance(value) {
-        this._xAdvance = value;
+        if (value > 0) this._lineHeight = value;
     }
 
     parse(option) {
-        if (!option) return;
-        const opt = queryString.parse(option);
+        this.merge(parseExportArgs(option));
+    }
+
+    merge(opt) {
         for (let attr in opt) {
-            if (attr in this) {
+            if (opt.hasOwnProperty(attr) && attr in this) {
                 this[attr] = opt[attr];
             }
         }
     }
 
     parseJson() {
+        //todo
     }
 }
