@@ -64,12 +64,10 @@ export default class BmfFntParser {
         } else {
             throw new Error("The char temp '<char id ...' dose not find!");
         }
-        this.replace('size', 24);
     }
 
     replace(key, value) {
         this._content = replace(this._content, key, value);
-        console.log(this._content);
     }
 
     addChar(font) {
@@ -77,8 +75,8 @@ export default class BmfFntParser {
         if (!this.hasChar(id)) {
             let temp = this._charTemp;
             temp = replace(temp, 'id', id);
-            temp = replace(temp, 'x', font.posX);
-            temp = replace(temp, 'y', font.posY);
+            temp = replace(temp, 'x', font.x);
+            temp = replace(temp, 'y', font.y);
             temp = replace(temp, 'width', font.width);
             temp = replace(temp, 'height', font.height);
             temp = replace(temp, 'xadvance', font.xadvance);

@@ -1,4 +1,5 @@
 import { isString } from "../utils";
+import { SPACE, TAB } from "../const";
 
 export class Font {
     constructor(text) {
@@ -23,16 +24,24 @@ export class Font {
         return this._charCode;
     }
 
-    setBound(x, y, width, height) {
-        this.x = x;
-        this.y = y;
+    isSpace() {
+        return this._text === SPACE;
+    }
+
+    isTab() {
+        return this._text === TAB;
+    }
+
+    setBound(posX, posY, width, height) {
+        this.posX = posX;
+        this.posY = posY;
         this.width = width;
         this.height = height;
         this.xadvance = width;
     }
 
-    pos(posX, posY) {
-        this.posX = posX;
-        this.posY = posY;
+    pos(x, y) {
+        this.x = x;
+        this.y = y;
     }
 }

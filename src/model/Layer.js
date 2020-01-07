@@ -1,4 +1,4 @@
-import { SPACE } from "../const";
+import { SPACE, TAB } from "../const";
 
 export default class Layer {
     constructor(layer, option) {
@@ -15,12 +15,18 @@ export default class Layer {
         if (!name) throw new Error('Layer name is necessary and correspond to the picture!');
         if (this._hasSpace = name.indexOf(SPACE) !== -1) {
             name = name.replace(SPACE, '');
+        } else if (this._hasTab = name.indexOf(TAB) !== -1) {
+            name = name.replace(TAB, '');
         }
         this._name = name;
     }
 
     hasSpace() {
         return this._hasSpace;
+    }
+
+    hasTab() {
+        return this._hasTab;
     }
 
     getFontText(i) {
