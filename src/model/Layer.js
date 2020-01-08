@@ -1,9 +1,9 @@
 import { SPACE, TAB } from "../const";
 
 export default class Layer {
-    constructor(layer, option) {
-        let offset = option.offset;
-        this._layer = layer;
+    constructor(layer, groupOpt) {
+        let offset = groupOpt.recognition.offset;
+        // this._layer = layer;
         this.dealName(layer.name);
         this.x = layer.left - offset.left;
         this.y = layer.top - offset.top;
@@ -15,7 +15,8 @@ export default class Layer {
         if (!name) throw new Error('Layer name is necessary and correspond to the picture!');
         if (this._hasSpace = name.indexOf(SPACE) !== -1) {
             name = name.replace(SPACE, '');
-        } else if (this._hasTab = name.indexOf(TAB) !== -1) {
+        }
+        if (this._hasTab = name.indexOf(TAB) !== -1) {
             name = name.replace(TAB, '');
         }
         this._name = name;

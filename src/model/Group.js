@@ -1,23 +1,25 @@
-import Option from "./Option";
 import Layer from "./Layer";
 
 const EXPORT_KEY = 'export?';
 
 export default class Group {
-    constructor(psdFileName, data) {
-        this._index = NaN;
-        this._group = null;
-        this._option = null;
-        this._layers = null;
-        this.init(psdFileName, data);
+
+    static canExport(data) {
+        return data.isGroup() && data.name.indexOf(EXPORT_KEY) !== -1;
     }
 
-    init(psdFileName, data) {
-        let option = data.name;
-        if (data.isGroup() && option.indexOf(EXPORT_KEY) !== -1) {
-            option = option.replace(EXPORT_KEY, '');
+    constructor(option) {
+        this._option = option;
+        this._index = NaN;
+        this._group = null;
+        this._layers = null;
+    }
+
+    init(index, data) {
+        if (Group.canExport(data)) {
             this._group = data;
-            this._option = new Option(psdFileName, option);
+            this._index = index;
+            this.groupOpt.recognition = data.name.replace(EXPORT_KEY, '');
             this.createLayers();
         }
     }
@@ -26,12 +28,12 @@ export default class Group {
         return this._option;
     }
 
-    get index() {
-        return this._index;
+    get groupOpt() {
+        return this._option.getGroup(this._index);
     }
 
-    set index(value) {
-        this._index = value;
+    get index() {
+        return this._index;
     }
 
     canExport() {
@@ -39,11 +41,11 @@ export default class Group {
     }
 
     createLayers() {
-        let layers = this._layers = [];
-        let children = this._group.children();
+        const layers = this._layers = [];
+        const children = this._group.children();
+        const groupOpt = this.groupOpt;
         for (let i = 0, length = children.length; i < length; i++) {
-            let child = children[i];
-            layers.push(new Layer(child, this._option));
+            layers.push(new Layer(children[i], groupOpt));
         }
     }
 

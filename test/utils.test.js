@@ -1,4 +1,4 @@
-import { parseExportArgs, readFile } from "../src/utils";
+import { parseRecognizeArgs, readFile } from "../src/utils";
 import { ENCODING } from "../src/const";
 
 test('Test readFile error', async () => {
@@ -6,8 +6,8 @@ test('Test readFile error', async () => {
     expect(content).toBe(null);
 });
 
-test('Test parseExportArgs', () => {
-    let obj = parseExportArgs('offset=0,0,3,0&xAdvance=4');
+test('Test parseRecognizeArgs', () => {
+    let obj = parseRecognizeArgs('offset=0,0,3,0&xAdvance=4');
     expect(obj).toEqual({
         offset: "0,0,3,0",
         xAdvance: 4

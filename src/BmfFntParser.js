@@ -56,7 +56,7 @@ export default class BmfFntParser {
 
     extractCharTemp() {
         const content = this._content;
-        const reg = /<char\s[\w\s="]+\/>/;
+        const reg = /<char\s+[\w\s="]+\/>/;
         const res = reg.exec(content);
         if (res !== null) {
             this._charTemp = res[0];

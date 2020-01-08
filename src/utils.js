@@ -1,10 +1,29 @@
 import path from "path";
 import fs from "fs-extra";
 import { PNG } from "pngjs";
-import { ENCODING } from "./const";
+import { ENCODING, SRC } from "./const";
 
 export function isString(any) {
     return typeof any === 'string';
+}
+
+export function isObject(any) {
+    return typeof any === 'object';
+}
+
+export function isArray(any) {
+    return Array.isArray(any);
+}
+
+export function merge(src, opt) {
+    if (opt && (isObject(opt) || isArray(opt))) {
+        for (let attr in opt) {
+            if (opt.hasOwnProperty(attr) && attr in src) {
+                src[attr] = opt[attr];
+            }
+        }
+    }
+    return src;
 }
 
 export async function readFile(filePath, option) {
@@ -33,7 +52,7 @@ let bmfTemp = null;
 
 export async function readBmfTemp() {
     if (bmfTemp === null) {
-        bmfTemp = await readFile(path.join(__dirname, 'temp/bmfTemp.fnt'), ENCODING);
+        bmfTemp = await readFile(path.join(SRC, 'temp/bmfTemp.fnt'), ENCODING);
     }
     return bmfTemp;
 }
@@ -75,7 +94,7 @@ export function createPng(width, height) {
     });
 }
 
-export function parseExportArgs(argsStr) {
+export function parseRecognizeArgs(argsStr) {
     let obj = {};
     if (argsStr && isString(argsStr)) {
         if (/\w+=.+&?/.test(argsStr)) {
@@ -86,8 +105,28 @@ export function parseExportArgs(argsStr) {
                 obj[strArr[0]] = isNaN(Number(value)) ? value : parseInt(value);
             }
         } else {
-            console.warn('The export args incorrect.');
+            console.warn('The recognize args incorrect.');
         }
     }
     return obj;
+}
+
+export function mergeRecognizeArgs(src, argsStr) {
+    return merge(src, parseRecognizeArgs(argsStr));
+}
+
+export function isExist(filePath, extName) {
+    const info = path.parse(filePath);
+    if (info.ext === extName) return fs.existsSync(filePath);
+    return false;
+}
+
+export function mustExist(filePath, extName) {
+    const info = path.parse(filePath);
+    if (info.ext === extName) {
+        if (fs.existsSync(filePath)) return filePath;
+        throw new Error('The file does not exist:' + filePath);
+    } else {
+        throw new Error(`This is not a ${extName} file!`);
+    }
 }
