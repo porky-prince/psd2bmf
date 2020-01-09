@@ -40,7 +40,7 @@ export const option = {
                     {
                         /** text */
                         text: "",
-                        /** path */
+                        /** *.png file path */
                         path: ""
                     }
                 ]

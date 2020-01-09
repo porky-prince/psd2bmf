@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs-extra";
 import { PNG } from "pngjs";
-import { ENCODING, SRC } from "./const";
+import { BMF_FNT_TEMP, ENCODING } from "./const";
 
 export function isString(any) {
     return typeof any === 'string';
@@ -52,7 +52,7 @@ let bmfTemp = null;
 
 export async function readBmfTemp() {
     if (bmfTemp === null) {
-        bmfTemp = await readFile(path.join(SRC, 'temp/bmfTemp.fnt'), ENCODING);
+        bmfTemp = await readFile(BMF_FNT_TEMP, ENCODING);
     }
     return bmfTemp;
 }
@@ -89,8 +89,8 @@ export function createPng(width, height) {
     return new PNG({
         width: width,
         height: height,
-        deflateLevel: 0,
-        filterType: 0
+        // deflateLevel: 0,
+        // filterType: 0
     });
 }
 

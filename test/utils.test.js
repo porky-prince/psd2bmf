@@ -1,9 +1,13 @@
-import { parseRecognizeArgs, readFile } from "../src/utils";
+import { parseRecognizeArgs, readBmfTemp, readFile, readPng } from "../src/utils";
 import { ENCODING } from "../src/const";
+import path from "path";
 
-test('Test readFile error', async () => {
+test('Test readFile', async () => {
     let content = await readFile('aaa', ENCODING);
     expect(content).toBe(null);
+
+    content = await readBmfTemp();
+    expect(!!content).toBe(true);
 });
 
 test('Test parseRecognizeArgs', () => {
@@ -12,4 +16,15 @@ test('Test parseRecognizeArgs', () => {
         offset: "0,0,3,0",
         xAdvance: 4
     });
+});
+
+test('Test readPng', async () => {
+    let png = await readPng('aaa');
+    expect(png).toBe(null);
+
+    png = await readPng(path.join(__dirname, './assets/test1.png'));
+    expect(!!png).toBe(true);
+
+    png = await readPng(path.join(__dirname, './assets/test_jpg.jpg'));
+    expect(png).toBe(null);
 });

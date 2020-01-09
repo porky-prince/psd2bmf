@@ -1,11 +1,12 @@
 import path from "path";
-import { isArray, isExist, merge, mustExist } from "../utils";
+import { isArray, isExist, isString, merge, mustExist } from "../utils";
 import { PNG_EXT, PSD_EXT } from "../const";
 import GroupOpt from "./GroupOpt";
 
 export default class Option {
     constructor(option) {
         this._input = '';
+        this._inputInfo = null;
         this._inputPng = '';
         this._output = '';
         this._filename = '';
@@ -18,7 +19,14 @@ export default class Option {
     }
 
     set input(value) {
-        this._input = value;
+        if (value && isString(value)) {
+            this._input = value;
+            this._inputInfo = path.parse(value);
+        }
+    }
+
+    get inputInfo() {
+        return this._inputInfo;
     }
 
     get inputPng() {
@@ -30,31 +38,31 @@ export default class Option {
     }
 
     set inputPng(value) {
-        this._inputPng = value;
+        if (value) this._inputPng = value;
     }
 
     get output() {
         let output = this._output;
         if (!output) {
-            output = path.parse(this._input).dir;
+            output = this._inputInfo.dir;
         }
         return output;
     }
 
     set output(value) {
-        this._output = value;
+        if (value) this._output = value;
     }
 
     get filename() {
         let filename = this._filename;
         if (!filename) {
-            filename = path.parse(this._input).name;
+            filename = this._inputInfo.name;
         }
         return filename;
     }
 
     set filename(value) {
-        this._filename = value;
+        if (value) this._filename = value;
     }
 
     get groups() {

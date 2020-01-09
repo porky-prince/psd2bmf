@@ -12,7 +12,7 @@ export default class ExportsOpt {
     }
 
     set output(value) {
-        this._output = value;
+        if (value) this._output = value;
     }
 
     get filename() {
@@ -20,7 +20,7 @@ export default class ExportsOpt {
     }
 
     set filename(value) {
-        this._filename = value;
+        if (value) this._filename = value;
     }
 
     get size() {

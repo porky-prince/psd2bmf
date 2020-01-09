@@ -11,6 +11,7 @@ export default class Group {
     constructor(option) {
         this._option = option;
         this._index = NaN;
+        this._onlyOne = false;
         this._group = null;
         this._layers = null;
     }
@@ -32,8 +33,37 @@ export default class Group {
         return this._option.getGroup(this._index);
     }
 
+    get recognizeOpt() {
+        return this.groupOpt.recognition;
+    }
+
+    get exportsOpt() {
+        return this.groupOpt.exports;
+    }
+
+    get extOpt() {
+        return this.groupOpt.ext;
+    }
+
     get index() {
         return this._index;
+    }
+
+    get onlyOne() {
+        return this._onlyOne;
+    }
+
+    set onlyOne(value) {
+        this._onlyOne = value;
+    }
+
+    getFilenameExt(output, filename) {
+        const inputInfo = this.option.inputInfo;
+        let ext = this.index.toString();
+        if (this._onlyOne && (inputInfo.dir !== output || inputInfo.name !== filename)) {
+            ext = '';
+        }
+        return ext;
     }
 
     canExport() {

@@ -5,14 +5,14 @@ import Layout from "layout";
 import Option from "./option/Option";
 import { createPng, readPng, writePng } from "./utils";
 import { Font } from "./model/Font";
-import { SPACE, TAB } from "./const";
+import { FNT_EXT, PNG_EXT, SPACE, TAB } from "./const";
 import BmfFntParser from "./BmfFntParser";
 
 function recognition(srcPng, group) {
     const srcPngData = srcPng.data;
     if (srcPngData[3] > 0) throw new Error('Are you sure the image background is transparent?');
     const layers = group.layers;
-    const splitSpace = group.groupOpt.recognition.splitSpace;
+    const splitSpace = group.recognizeOpt.splitSpace;
     const fonts = [];
     for (let i = 0, length = layers.length; i < length; i++) {
         let layer = layers[i];
@@ -20,7 +20,7 @@ function recognition(srcPng, group) {
             throw new Error('Layer is out of bounds!');
         }
 
-        group.groupOpt.exports.setDefault(layer.height, layer.height);
+        group.exportsOpt.setDefault(layer.size, layer.size);
 
         let start = NaN;
         let end = 0;
@@ -40,7 +40,7 @@ function recognition(srcPng, group) {
                 } else if (!isNaN(start) && y === yLen - 1) {// start不为NaN说明已经开始了一个字的识别
                     spaceCount++;// 一列都是透明
                     if (spaceCount > splitSpace) {// 当连续超过splitSpace列透明时则这个字识别结束
-                        const font = new Font(layer.getFontText(fontCount));
+                        const font = new Font(layer.getFontText(fontCount, true));
                         font.setBound(start, layer.y, end - splitSpace - start, layer.height);
                         fonts.push(font);
                         fontCount++;
@@ -57,15 +57,22 @@ function recognition(srcPng, group) {
     return fonts;
 }
 
-function dealFonts(fonts) {
+async function dealFonts(fonts) {
     const length = fonts.length;
     if (length > 0) {
         const layout = Layout('binary-tree');
         const unique = [];
         const specialItems = [];
+        const customPng = {};
         for (let i = 0; i < length; i++) {
             const font = fonts[i];
             if (unique.indexOf(font.id) === -1) {
+                if (font.isCustom()) {
+                    const png = await font.readCustomPng();
+                    if (png !== null) {
+                        customPng[font.id] = png;
+                    } else break;
+                }
                 unique.push(font.id);
                 if (!font.isSpace() && !font.isTab()) {
                     layout.addItem(font);
@@ -76,41 +83,71 @@ function dealFonts(fonts) {
         }
         const layoutInfo = layout.export();
         layoutInfo.specialItems = specialItems;
+        layoutInfo.customPng = customPng;
         return layoutInfo;
     }
     return null;
 }
 
-async function exportAll(srcPng, group) {
-    const layoutInfo = dealFonts(recognition(srcPng, group));
+async function exportGroups(srcPng, groups) {
+    const taskAll = [];
+    for (let i = 0, length = groups.length; i < length; i++) {
+        taskAll.push(exportGroup(srcPng, groups[i]));
+    }
+    await Promise.all(taskAll);
+}
+
+async function exportGroup(srcPng, group) {
+    const option = group.option;
+    const groupOpt = group.groupOpt;
+    const layoutInfo = await dealFonts(recognition(srcPng, group).concat(groupOpt.ext.chars));
     if (layoutInfo !== null) {
+        // TODO
+        const exportsOpt = groupOpt.exports;
+        let output = exportsOpt.output;
+        let filename = exportsOpt.filename;
+        if (!output) {
+            output = option.output;
+        }
+        if (!filename) {
+            filename = option.filename;
+            filename += group.getFilenameExt(output, filename);
+        }
+        const outputPath = path.join(output, filename);
         await Promise.all([
-            exportPng(srcPng, group, layoutInfo),
-            exportFnt(group, layoutInfo)
+            exportPng(srcPng, layoutInfo, outputPath),
+            exportFnt(exportsOpt, layoutInfo, filename, outputPath)
         ]);
     }
 }
 
-async function exportPng(srcPng, group, layoutInfo) {
+async function exportPng(srcPng, layoutInfo, outputPath) {
     const distPng = createPng(layoutInfo.width, layoutInfo.height);
     for (let i = 0, length = layoutInfo.items.length; i < length; i++) {
         const font = layoutInfo.items[i];
-        srcPng.bitblt(distPng, font.posX, font.posY, font.width, font.height, font.x, font.y);
+        let _srcPng = srcPng;
+        if (font.isCustom()) {
+            _srcPng = layoutInfo.customPng[font.id];
+        }
+        _srcPng.bitblt(distPng, font.posX, font.posY, font.width, font.height, font.x, font.y);
     }
-    await writePng(path.join(__dirname, `../test/output/out${0}.png`), distPng);
+    await writePng(outputPath + PNG_EXT, distPng);
 }
 
-async function exportFnt(group, layoutInfo) {
+async function exportFnt(exportOpt, layoutInfo, filename, outputPath) {
     const fonts = layoutInfo.items.concat(layoutInfo.specialItems);
     const parser = new BmfFntParser();
-    await parser.parse();
+    await parser.parse(exportOpt.bmfFntTemp);
+    parser.replace('size', exportOpt.size);
+    parser.replace('lineHeight', exportOpt.lineHeight);
+    parser.replace('file', filename + PNG_EXT);
     parser.replace('scaleW', layoutInfo.width);
     parser.replace('scaleH', layoutInfo.height);
     parser.replace('count', fonts.length);
     for (let i = 0, length = fonts.length; i < length; i++) {
         parser.addChar(fonts[i]);
     }
-    await parser.save2BmfFnt(path.join(__dirname, `../test/output/out${0}.fnt`));
+    await parser.save2BmfFnt(outputPath + FNT_EXT);
 }
 
 async function run(option) {
@@ -125,17 +162,20 @@ async function run(option) {
 
     const tree = psd.tree();
     const children = tree.children();
-    const taskAll = [];
+    const groups = [];
     let exportCount = 0;
     for (let i = 0, length = children.length; i < length; i++) {
         let child = children[i];
         if (Group.canExport(child)) {
-            let group = new Group(option);
+            const group = new Group(option);
             group.init(exportCount++, child);
-            taskAll.push(exportAll(srcPng, group));
+            groups.push(group);
         }
     }
-    await Promise.all(taskAll);
+    if (groups.length === 1) {
+        groups[0].onlyOne = true;
+    }
+    await exportGroups(srcPng, groups);
 }
 
 export default class Psd2bmf {
@@ -153,6 +193,16 @@ export default class Psd2bmf {
     }
 }
 
-const psdPath = require.resolve(path.join(__dirname, "../test/assets/test1.psd"));
+const output = 'E:\\project\\ro_new\\dev\\client\\trunk\\myLaya\\bin\\font';
+const output1 = path.join(__dirname, "../test/output");
+const psdPath = require.resolve(path.join(__dirname, "../test/assets/test.psd"));
+const psdPath0 = require.resolve(path.join(__dirname, "../test/assets/test1.psd"));
+const psdPath1 = require.resolve(path.join(__dirname, "../test/assets/bmf_Button_blue.psd"));
+const psdPath2 = require.resolve(path.join(__dirname, "../test/assets/bmf_Button_yellow.psd"));
+const psdPath3 = require.resolve(path.join(__dirname, "../test/assets/bmf_titile.psd"));
 
-Psd2bmf.exec(psdPath);
+// Psd2bmf.exec(psdPath1, output1, 'bmf_Button_blue');
+// Psd2bmf.exec(psdPath2, output1, 'bmf_Button_yellow');
+// Psd2bmf.exec(psdPath3, output1, 'bmf_titile');
+// Psd2bmf.exec(psdPath, output1);
+// Psd2bmf.exec(psdPath0, undefined, 'aaaa');
