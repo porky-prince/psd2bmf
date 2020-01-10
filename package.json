@@ -1,31 +1,50 @@
 {
-  "name": "psd2bmf",
-  "version": "1.0.0",
-  "description": "Convert the PSD to BMF.",
-  "main": "index.js",
-  "scripts": {
-    "start": "npm run build -- -w",
-    "clean": "del-cli dist",
-    "prebuild": "npm run clean",
-    "debug": "node-nightly --inspect-brk dist/main.js",
-    "debugger": "node dist/main.js",
-    "test": "jest",
-    "build": "babel src -d dist --copy-files"
-  },
-  "author": "Kay",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "babel-jest": "^24.9.0",
-    "del": "^5.1.0",
-    "del-cli": "^3.0.0",
-    "jest": "^24.9.0"
-  },
-  "dependencies": {
-    "fs-extra": "^8.1.0",
-    "layout": "^2.2.0",
-    "psd": "^3.2.0"
-  }
+    "name": "psd2bmf",
+    "version": "1.0.0",
+    "description": "Convert the PSD to BMF.",
+    "author": "Kay",
+    "license": "MIT",
+    "main": "dist/main.js",
+    "bin": {
+        "psd2bmf": "bin/psd2bmf.js"
+    },
+    "files": [
+        "bin",
+        "dist"
+    ],
+    "engines": {
+        "node": ">=8.0.0"
+    },
+    "scripts": {
+        "start": "npm run build -- -w -s inline",
+        "clean": "del-cli dist",
+        "prebuild": "npm run clean",
+        "debug": "node-nightly --inspect-brk dist/main.js",
+        "debugger": "node dist/main.js",
+        "exports": "node test/exports.test.js",
+        "test": "jest",
+        "build": "babel src -d dist --copy-files"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.7.7",
+        "@babel/core": "^7.7.7",
+        "@babel/preset-env": "^7.7.7",
+        "babel-jest": "^24.9.0",
+        "del": "^5.1.0",
+        "del-cli": "^3.0.0",
+        "jest": "^24.9.0"
+    },
+    "dependencies": {
+        "fs-extra": "^8.1.0",
+        "layout": "^2.2.0",
+        "psd": "^3.2.0",
+        "yargs": "^15.1.0"
+    },
+    "keywords": [
+        "psd",
+        "bmf",
+        "bmfont",
+        "fnt",
+        "sprite"
+    ]
 }

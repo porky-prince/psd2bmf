@@ -14,13 +14,14 @@ export default class Group {
         this._onlyOne = false;
         this._group = null;
         this._layers = null;
+        this._maxLayerHeight = 0;
     }
 
     init(index, data) {
         if (Group.canExport(data)) {
             this._group = data;
             this._index = index;
-            this.groupOpt.recognition = data.name.replace(EXPORT_KEY, '');
+            this.groupOpt.recognition = data.name.slice(data.name.indexOf(EXPORT_KEY) + EXPORT_KEY.length);
             this.createLayers();
         }
     }
@@ -75,11 +76,19 @@ export default class Group {
         const children = this._group.children();
         const groupOpt = this.groupOpt;
         for (let i = 0, length = children.length; i < length; i++) {
-            layers.push(new Layer(children[i], groupOpt));
+            const layer = new Layer(children[i], groupOpt);
+            if (this._maxLayerHeight < layer.height) {
+                this._maxLayerHeight = layer.height;
+            }
+            layers.push(layer);
         }
     }
 
     get layers() {
         return this._layers;
+    }
+
+    get maxLayerHeight() {
+        return this._maxLayerHeight;
     }
 }

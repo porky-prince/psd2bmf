@@ -90,7 +90,7 @@ export function createPng(width, height) {
         width: width,
         height: height,
         // deflateLevel: 0,
-        // filterType: 0
+        // filterType: 4
     });
 }
 

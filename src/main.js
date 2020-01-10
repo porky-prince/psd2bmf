@@ -8,11 +8,40 @@ import { Font } from "./model/Font";
 import { FNT_EXT, PNG_EXT, SPACE, TAB } from "./const";
 import BmfFntParser from "./BmfFntParser";
 
+async function run(option) {
+    const psd = PSD.fromFile(option.input);
+    psd.parse();
+    let srcPng = await readPng(option.inputPng);
+    if (srcPng === null) {
+        console.warn("Png image exported with PhotoShop are of higher quality!");
+        srcPng = createPng(psd.image.width(), psd.image.height());
+        srcPng.data = Buffer.from(psd.image.pixelData);
+    }
+
+    const tree = psd.tree();
+    const children = tree.children();
+    const groups = [];
+    let exportCount = 0;
+    for (let i = 0, length = children.length; i < length; i++) {
+        let child = children[i];
+        if (Group.canExport(child)) {
+            const group = new Group(option);
+            group.init(exportCount++, child);
+            groups.push(group);
+        }
+    }
+    if (groups.length === 1) {
+        groups[0].onlyOne = true;
+    }
+    await exportGroups(srcPng, groups);
+}
+
 function recognition(srcPng, group) {
     const srcPngData = srcPng.data;
     if (srcPngData[3] > 0) throw new Error('Are you sure the image background is transparent?');
     const layers = group.layers;
     const splitSpace = group.recognizeOpt.splitSpace;
+    const maxLayerHeight = group.maxLayerHeight;
     const fonts = [];
     for (let i = 0, length = layers.length; i < length; i++) {
         let layer = layers[i];
@@ -41,7 +70,7 @@ function recognition(srcPng, group) {
                     spaceCount++;// 一列都是透明
                     if (spaceCount > splitSpace) {// 当连续超过splitSpace列透明时则这个字识别结束
                         const font = new Font(layer.getFontText(fontCount, true));
-                        font.setBound(start, layer.y, end - splitSpace - start, layer.height);
+                        font.setBound(start, layer.y - (maxLayerHeight - layer.height), end - splitSpace - start, maxLayerHeight);
                         fonts.push(font);
                         fontCount++;
                         start = NaN;// 从新开始识别下一个字
@@ -57,7 +86,7 @@ function recognition(srcPng, group) {
     return fonts;
 }
 
-async function dealFonts(fonts) {
+async function build(fonts) {
     const length = fonts.length;
     if (length > 0) {
         const layout = Layout('binary-tree');
@@ -100,7 +129,7 @@ async function exportGroups(srcPng, groups) {
 async function exportGroup(srcPng, group) {
     const option = group.option;
     const groupOpt = group.groupOpt;
-    const layoutInfo = await dealFonts(recognition(srcPng, group).concat(groupOpt.ext.chars));
+    const layoutInfo = await build(recognition(srcPng, group).concat(groupOpt.ext.chars));
     if (layoutInfo !== null) {
         // TODO
         const exportsOpt = groupOpt.exports;
@@ -150,59 +179,17 @@ async function exportFnt(exportOpt, layoutInfo, filename, outputPath) {
     await parser.save2BmfFnt(outputPath + FNT_EXT);
 }
 
-async function run(option) {
-    const psd = PSD.fromFile(option.input);
-    psd.parse();
-    let srcPng = await readPng(option.inputPng);
-    if (srcPng === null) {
-        console.warn("Png image exported with PhotoShop are of higher quality!");
-        srcPng = createPng(psd.image.width(), psd.image.height());
-        srcPng.data = Buffer.from(psd.image.pixelData);
-    }
-
-    const tree = psd.tree();
-    const children = tree.children();
-    const groups = [];
-    let exportCount = 0;
-    for (let i = 0, length = children.length; i < length; i++) {
-        let child = children[i];
-        if (Group.canExport(child)) {
-            const group = new Group(option);
-            group.init(exportCount++, child);
-            groups.push(group);
-        }
-    }
-    if (groups.length === 1) {
-        groups[0].onlyOne = true;
-    }
-    await exportGroups(srcPng, groups);
-}
-
-export default class Psd2bmf {
-    static async exec(psdPath, output, filename, inputPng) {
+module.exports = {
+    async exec(psdPath, output, filename, inputPng) {
         let opt = new Option();
         opt.input = psdPath;
         opt.output = output;
         opt.filename = filename;
         opt.inputPng = inputPng;
         await run(opt);
-    }
+    },
 
-    static async run(option) {
+    async run(option) {
         await run(new Option(option));
     }
-}
-
-const output = 'E:\\project\\ro_new\\dev\\client\\trunk\\myLaya\\bin\\font';
-const output1 = path.join(__dirname, "../test/output");
-const psdPath = require.resolve(path.join(__dirname, "../test/assets/test.psd"));
-const psdPath0 = require.resolve(path.join(__dirname, "../test/assets/test1.psd"));
-const psdPath1 = require.resolve(path.join(__dirname, "../test/assets/bmf_Button_blue.psd"));
-const psdPath2 = require.resolve(path.join(__dirname, "../test/assets/bmf_Button_yellow.psd"));
-const psdPath3 = require.resolve(path.join(__dirname, "../test/assets/bmf_titile.psd"));
-
-// Psd2bmf.exec(psdPath1, output1, 'bmf_Button_blue');
-// Psd2bmf.exec(psdPath2, output1, 'bmf_Button_yellow');
-// Psd2bmf.exec(psdPath3, output1, 'bmf_titile');
-// Psd2bmf.exec(psdPath, output1);
-// Psd2bmf.exec(psdPath0, undefined, 'aaaa');
+};
