@@ -1,5 +1,5 @@
-import { readBmfTemp, readFile, writeFile } from "./utils";
-import { ENCODING } from "./const";
+import { readBmfTemp, readFile, writeFile } from './utils';
+import { ENCODING } from './const';
 
 const Placeholder = '<!-- CharTemp -->';
 
@@ -18,7 +18,6 @@ function replace(content, key, value) {
 }
 
 export default class BmfFntParser {
-
     constructor() {
         this._path = '';
         this._content = '';

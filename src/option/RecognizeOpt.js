@@ -1,4 +1,4 @@
-import Offset from "./Offset";
+import Offset from './Offset';
 
 export default class RecognizeOpt {
     constructor() {
@@ -21,7 +21,7 @@ export default class RecognizeOpt {
     set splitSpace(value) {
         if (value > 0) {
             if (value < this._splitSpace / 2) {
-                console.warn("The splitSpace is small.");
+                console.warn('The splitSpace is small.');
             }
             this._splitSpace = value;
         }

@@ -1,7 +1,7 @@
-import RecognizeOpt from "./RecognizeOpt";
-import ExportsOpt from "./ExportsOpt";
-import ExtOpt from "./ExtOpt";
-import { isString, merge, mergeRecognizeArgs } from "../utils";
+import RecognizeOpt from './RecognizeOpt';
+import ExportsOpt from './ExportsOpt';
+import ExtOpt from './ExtOpt';
+import { isString, merge, mergeRecognizeArgs } from '../utils';
 
 export default class GroupOpt {
     constructor() {

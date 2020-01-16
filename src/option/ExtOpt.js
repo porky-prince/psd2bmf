@@ -1,5 +1,5 @@
-import { isArray, merge } from "../utils";
-import { Font } from "../model/Font";
+import { isArray, merge } from '../utils';
+import { Font } from '../model/Font';
 
 export default class ExtOpt {
     constructor() {

@@ -1,5 +1,5 @@
-import { isString, readPng } from "../utils";
-import { SPACE, TAB } from "../const";
+import { isString, readPng } from '../utils';
+import { SPACE, TAB } from '../const';
 
 export class Font {
     constructor(text) {

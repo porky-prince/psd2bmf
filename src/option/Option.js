@@ -1,7 +1,7 @@
-import path from "path";
-import { isArray, isExist, isString, merge, mustExist } from "../utils";
-import { PNG_EXT, PSD_EXT } from "../const";
-import GroupOpt from "./GroupOpt";
+import path from 'path';
+import { isArray, isExist, isString, merge, mustExist } from '../utils';
+import { PNG_EXT, PSD_EXT } from '../const';
+import GroupOpt from './GroupOpt';
 
 export default class Option {
     constructor(option) {

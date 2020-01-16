@@ -1,28 +1,28 @@
 export const option = {
     /** (necessary)psd path. */
-    input: "",
+    input: '',
     /** psd export png file path. default: [psd_file_dir/psd_filename.png] */
-    inputPng: "",
+    inputPng: '',
     /** global output dir. default: [psd_file_dir] */
-    output: "",
+    output: '',
     /** global filename. default: [psd_filename]*/
-    filename: "",
+    filename: '',
     /** each group option */
     groups: [
         {
             /** recognition option */
             recognition: {
                 /** split offset(top,right,bottom,left). */
-                offset: "0,0,0,0",
+                offset: '0,0,0,0',
                 /** split space */
-                splitSpace: 10
+                splitSpace: 10,
             },
             /** exports option */
             exports: {
                 /** output dir, will overwrite global output. */
-                output: "",
+                output: '',
                 /** output filename, will overwrite global filename. */
-                filename: "",
+                filename: '',
                 /** font size. default: [Auto] */
                 size: 0,
                 /** lineHeight. default: [Auto] */
@@ -31,7 +31,7 @@ export const option = {
                 // maxWidth: 1024,
                 // maxHeight: 1024,
                 /** *.fnt file temp */
-                bmfFntTemp: ""
+                bmfFntTemp: '',
             },
             /** ext option */
             ext: {
@@ -39,12 +39,12 @@ export const option = {
                 chars: [
                     {
                         /** text */
-                        text: "",
+                        text: '',
                         /** *.png file path */
-                        path: ""
-                    }
-                ]
-            }
-        }
-    ]
+                        path: '',
+                    },
+                ],
+            },
+        },
+    ],
 };

@@ -1,9 +1,8 @@
-import Layer from "./Layer";
+import Layer from './Layer';
 
 const EXPORT_KEY = 'export?';
 
 export default class Group {
-
     static canExport(data) {
         return data.isGroup() && data.name.indexOf(EXPORT_KEY) !== -1;
     }
@@ -21,7 +20,9 @@ export default class Group {
         if (Group.canExport(data)) {
             this._group = data;
             this._index = index;
-            this.groupOpt.recognition = data.name.slice(data.name.indexOf(EXPORT_KEY) + EXPORT_KEY.length);
+            this.groupOpt.recognition = data.name.slice(
+                data.name.indexOf(EXPORT_KEY) + EXPORT_KEY.length
+            );
             this.createLayers();
         }
     }
@@ -60,8 +61,11 @@ export default class Group {
 
     getFilenameExt(output, filename) {
         const inputInfo = this.option.inputInfo;
-        let ext = this.index.toString();
-        if (this._onlyOne && (inputInfo.dir !== output || inputInfo.name !== filename)) {
+        let ext = '_' + this.index;
+        if (
+            this._onlyOne &&
+            (inputInfo.dir !== output || inputInfo.name !== filename)
+        ) {
             ext = '';
         }
         return ext;
@@ -72,7 +76,7 @@ export default class Group {
     }
 
     createLayers() {
-        const layers = this._layers = [];
+        const layers = (this._layers = []);
         const children = this._group.children();
         const groupOpt = this.groupOpt;
         for (let i = 0, length = children.length; i < length; i++) {

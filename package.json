@@ -2,8 +2,11 @@
     "name": "psd2bmf",
     "version": "1.0.0",
     "description": "Convert the PSD to BMF.",
-    "author": "Kay",
     "license": "MIT",
+    "author": "Kay",
+    "homepage": "https://gitee.com/porky-prince/psd2bmf#readme",
+    "repository": "https://gitee.com/porky-prince/psd2bmf",
+    "bugs": "https://gitee.com/porky-prince/psd2bmf/issues",
     "main": "dist/main.js",
     "bin": {
         "psd2bmf": "bin/psd2bmf.js"
@@ -22,8 +25,13 @@
         "debug": "node-nightly --inspect-brk dist/main.js",
         "debugger": "node dist/main.js",
         "exports": "node test/exports.test.js",
+        "lint:prettier": "prettier \"{**/*,*}.{js,json,md}\" -l",
+        "lint:js": "eslint --cache .",
+        "lint": "npm-run-all -l -p \"lint:**\"",
+        "pretest": "del-cli test/output",
         "test": "jest",
-        "build": "babel src -d dist --copy-files"
+        "build": "babel src -d dist --copy-files",
+        "release": "standard-version"
     },
     "devDependencies": {
         "@babel/cli": "^7.7.7",
@@ -32,7 +40,13 @@
         "babel-jest": "^24.9.0",
         "del": "^5.1.0",
         "del-cli": "^3.0.0",
-        "jest": "^24.9.0"
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.9.0",
+        "eslint-plugin-import": "^2.20.0",
+        "jest": "^24.9.0",
+        "npm-run-all": "^4.1.5",
+        "prettier": "1.19.1",
+        "standard-version": "^7.0.1"
     },
     "dependencies": {
         "fs-extra": "^8.1.0",

@@ -1,7 +1,10 @@
-import { SPACE, TAB } from "../const";
+import { SPACE, TAB } from '../const';
 
 function nameError(name) {
-    if (!name) throw new Error('Layer name is necessary and correspond to the picture!');
+    if (!name)
+        throw new Error(
+            'Layer name is necessary and correspond to the picture!'
+        );
 }
 
 export default class Layer {
@@ -21,10 +24,10 @@ export default class Layer {
 
     dealName(name) {
         nameError(name);
-        if (this._hasTab = name.indexOf(TAB) !== -1) {
+        if ((this._hasTab = name.indexOf(TAB) !== -1)) {
             name = name.replace(TAB, '');
         }
-        if (this._hasSpace = name.indexOf(SPACE) !== -1) {
+        if ((this._hasSpace = name.indexOf(SPACE) !== -1)) {
             name = name.replace(SPACE, '');
         }
         this._name = name;

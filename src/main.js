@@ -1,19 +1,21 @@
-import path from "path";
-import PSD from "psd";
-import Group from "./model/Group";
-import Layout from "layout";
-import Option from "./option/Option";
-import { createPng, readPng, writePng } from "./utils";
-import { Font } from "./model/Font";
-import { FNT_EXT, PNG_EXT, SPACE, TAB } from "./const";
-import BmfFntParser from "./BmfFntParser";
+import path from 'path';
+import PSD from 'psd';
+import Group from './model/Group';
+import Layout from 'layout';
+import Option from './option/Option';
+import { createPng, readPng, writePng } from './utils';
+import { Font } from './model/Font';
+import { FNT_EXT, PNG_EXT, SPACE, TAB } from './const';
+import BmfFntParser from './BmfFntParser';
 
-async function run(option) {
+async function runTask(option) {
     const psd = PSD.fromFile(option.input);
     psd.parse();
     let srcPng = await readPng(option.inputPng);
     if (srcPng === null) {
-        console.warn("Png image exported with PhotoShop are of higher quality!");
+        console.warn(
+            'Png image exported with PhotoShop are of higher quality!'
+        );
         srcPng = createPng(psd.image.width(), psd.image.height());
         srcPng.data = Buffer.from(psd.image.pixelData);
     }
@@ -38,14 +40,20 @@ async function run(option) {
 
 function recognition(srcPng, group) {
     const srcPngData = srcPng.data;
-    if (srcPngData[3] > 0) throw new Error('Are you sure the image background is transparent?');
+    if (srcPngData[3] > 0)
+        throw new Error('Are you sure the image background is transparent?');
     const layers = group.layers;
     const splitSpace = group.recognizeOpt.splitSpace;
     const maxLayerHeight = group.maxLayerHeight;
     const fonts = [];
     for (let i = 0, length = layers.length; i < length; i++) {
         let layer = layers[i];
-        if (layer.x < 0 || layer.y < 0 || layer.width > srcPng.width || layer.height > srcPng.height) {
+        if (
+            layer.x < 0 ||
+            layer.y < 0 ||
+            layer.width > srcPng.width ||
+            layer.height > srcPng.height
+        ) {
             throw new Error('Layer is out of bounds!');
         }
 
@@ -55,25 +63,37 @@ function recognition(srcPng, group) {
         let end = 0;
         let spaceCount = 0;
         let fontCount = 0;
-        const xLen = Math.min(layer.x + layer.width + splitSpace * 1.5, srcPng.width);
+        const xLen = Math.min(
+            layer.x + layer.width + splitSpace * 1.5,
+            srcPng.width
+        );
         const yLen = layer.y + layer.height;
         for (let x = layer.x; x < xLen; x++) {
             for (let y = layer.y; y < yLen; y++) {
                 const idx = (srcPng.width * y + x) << 2;
                 const alpha = srcPngData[idx + 3];
                 if (alpha > 0) {
-                    if (isNaN(start)) start = end = x;// 开始识别
+                    if (isNaN(start)) start = end = x; // 开始识别
                     end++;
                     spaceCount = 0;
                     break;
-                } else if (!isNaN(start) && y === yLen - 1) {// start不为NaN说明已经开始了一个字的识别
-                    spaceCount++;// 一列都是透明
-                    if (spaceCount > splitSpace) {// 当连续超过splitSpace列透明时则这个字识别结束
-                        const font = new Font(layer.getFontText(fontCount, true));
-                        font.setBound(start, layer.y - (maxLayerHeight - layer.height), end - splitSpace - start, maxLayerHeight);
+                } else if (!isNaN(start) && y === yLen - 1) {
+                    // start不为NaN说明已经开始了一个字的识别
+                    spaceCount++; // 一列都是透明
+                    if (spaceCount > splitSpace) {
+                        // 当连续超过splitSpace列透明时则这个字识别结束
+                        const font = new Font(
+                            layer.getFontText(fontCount, true)
+                        );
+                        font.setBound(
+                            start,
+                            layer.y - (maxLayerHeight - layer.height),
+                            end - splitSpace - start,
+                            maxLayerHeight
+                        );
                         fonts.push(font);
                         fontCount++;
-                        start = NaN;// 从新开始识别下一个字
+                        start = NaN; // 从新开始识别下一个字
                     } else {
                         end++;
                     }
@@ -129,7 +149,9 @@ async function exportGroups(srcPng, groups) {
 async function exportGroup(srcPng, group) {
     const option = group.option;
     const groupOpt = group.groupOpt;
-    const layoutInfo = await build(recognition(srcPng, group).concat(groupOpt.ext.chars));
+    const layoutInfo = await build(
+        recognition(srcPng, group).concat(groupOpt.ext.chars)
+    );
     if (layoutInfo !== null) {
         // TODO
         const exportsOpt = groupOpt.exports;
@@ -145,7 +167,7 @@ async function exportGroup(srcPng, group) {
         const outputPath = path.join(output, filename);
         await Promise.all([
             exportPng(srcPng, layoutInfo, outputPath),
-            exportFnt(exportsOpt, layoutInfo, filename, outputPath)
+            exportFnt(exportsOpt, layoutInfo, filename, outputPath),
         ]);
     }
 }
@@ -158,7 +180,15 @@ async function exportPng(srcPng, layoutInfo, outputPath) {
         if (font.isCustom()) {
             _srcPng = layoutInfo.customPng[font.id];
         }
-        _srcPng.bitblt(distPng, font.posX, font.posY, font.width, font.height, font.x, font.y);
+        _srcPng.bitblt(
+            distPng,
+            font.posX,
+            font.posY,
+            font.width,
+            font.height,
+            font.x,
+            font.y
+        );
     }
     await writePng(outputPath + PNG_EXT, distPng);
 }
@@ -179,17 +209,15 @@ async function exportFnt(exportOpt, layoutInfo, filename, outputPath) {
     await parser.save2BmfFnt(outputPath + FNT_EXT);
 }
 
-module.exports = {
-    async exec(psdPath, output, filename, inputPng) {
-        let opt = new Option();
-        opt.input = psdPath;
-        opt.output = output;
-        opt.filename = filename;
-        opt.inputPng = inputPng;
-        await run(opt);
-    },
+export async function exec(psdPath, output, filename, inputPng) {
+    let opt = new Option();
+    opt.input = psdPath;
+    opt.output = output;
+    opt.filename = filename;
+    opt.inputPng = inputPng;
+    await runTask(opt);
+}
 
-    async run(option) {
-        await run(new Option(option));
-    }
-};
+export async function run(option) {
+    await runTask(new Option(option));
+}

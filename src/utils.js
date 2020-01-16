@@ -1,7 +1,7 @@
-import path from "path";
-import fs from "fs-extra";
-import { PNG } from "pngjs";
-import { BMF_FNT_TEMP, ENCODING } from "./const";
+import path from 'path';
+import fs from 'fs-extra';
+import { PNG } from 'pngjs';
+import { BMF_FNT_TEMP, ENCODING } from './const';
 
 export function isString(any) {
     return typeof any === 'string';
@@ -27,10 +27,10 @@ export function merge(src, opt) {
 }
 
 export async function readFile(filePath, option) {
-    return new Promise(resolve => {
-        fs.exists(filePath, exists => {
+    return new Promise((resolve) => {
+        fs.exists(filePath, (exists) => {
             if (exists) {
-                fs.readFile(filePath, option, function (err, data) {
+                fs.readFile(filePath, option, function(err, data) {
                     err ? resolve(null) : resolve(data);
                 });
             } else {
@@ -42,7 +42,7 @@ export async function readFile(filePath, option) {
 
 export async function writeFile(filePath, data, option) {
     return new Promise((resolve, reject) => {
-        fs.outputFile(filePath, data, option, err => {
+        fs.outputFile(filePath, data, option, (err) => {
             err ? reject() : resolve();
         });
     });
@@ -58,15 +58,15 @@ export async function readBmfTemp() {
 }
 
 export async function readPng(pngPath) {
-    return new Promise(resolve => {
-        fs.exists(pngPath, exists => {
+    return new Promise((resolve) => {
+        fs.exists(pngPath, (exists) => {
             if (exists) {
                 fs.createReadStream(pngPath)
                     .pipe(createPng(undefined, undefined))
-                    .on('parsed', function () {
+                    .on('parsed', function() {
                         resolve(this);
                     })
-                    .on('error', function () {
+                    .on('error', function() {
                         resolve(null);
                     });
             } else {
@@ -79,8 +79,13 @@ export async function readPng(pngPath) {
 export async function writePng(pngPath, pngData) {
     return new Promise((resolve, reject) => {
         const dir = path.parse(pngPath).dir;
-        fs.ensureDir(dir, err => {
-            err ? reject() : pngData.pack().pipe(fs.createWriteStream(pngPath)).on('end', resolve);
+        fs.ensureDir(dir, (err) => {
+            err
+                ? reject()
+                : pngData
+                      .pack()
+                      .pipe(fs.createWriteStream(pngPath))
+                      .on('end', resolve);
         });
     });
 }
