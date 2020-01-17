@@ -1,37 +1,140 @@
 # psd2bmf
 
-#### 介绍
+这是一个直接将 psd 文件转换为 bmfont 的工具，只需要 UI 设计师提供一个 psd 文件即可，无需任何软件依赖以及没有繁琐的操作。
 
-Convert the PSD to BMF.
+![example](./docs/example.jpg)
 
-#### 软件架构
+### 安装
 
-软件架构说明
+使用 npm 安装：
 
-#### 安装教程
+```shell
+$ npm install psd2bmf --save-dev
+```
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+或者使用 yarn 安装：
 
-#### 使用说明
+```shell
+$ yarn add psd2bmf --dev
+```
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+### 使用
 
-#### 参与贡献
+可经过全局安装通过命令行使用：
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+```shell
+$ npm install -g psd2bmf
+```
 
-#### 码云特技
+#### 命令行使用
 
-1.  使用 Readme_XXX.md 来支持不同的语言，例如 Readme_en.md, Readme_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+```shell
+$ psd2bmf [options]
+```
+
+例如：
+
+```shell
+$ psd2bmf -i input.psd -o output
+```
+
+#### 命令行参数
+
+```console
+    --version               	查看版本。
+    -h, --help                  查看帮助信息。
+    -i, --input      			psd源文件路径。
+    -o, --output [options]   	输出目录，不传则默认输出在psd源文件目录下。
+    -f, --filename [options]    输出文件文件名，不传则默认与psd源文件同名。
+    -p, --png [options]        	使用PhotoShop导出的png图片，如果指定则会使用此png图片数据，
+    							默认会在psd源文件的目录下查找，找到则使用，找不到则使用psd源文件
+    							中的数据，使用PhotoShop导出的png图片质量比使用psd源文件中的更高。
+```
+
+#### 在代码中使用
+
+也可局部安装在代码中使用：
+
+```javascript
+const { exec, run } = require('psd2bmf');
+
+// exec
+exec('test.psd'); // => test.fnt,test.png
+// or
+exec('test.psd', 'output'); // => output/test.fnt,output/test.png
+// or
+exec('test.psd', 'output', 'other'); // => output/other.fnt,output/other.png
+// run
+run(option);
+```
+
+##### option
+
+```javascript
+const option = {
+    /** (necessary)psd path. */
+    input: '',
+    /** psd export png file path. default: [psd_file_dir/psd_filename.png] */
+    inputPng: '',
+    /** global output dir. default: [psd_file_dir] */
+    output: '',
+    /** global filename. default: [psd_filename]*/
+    filename: '',
+    /** each group option */
+    groups: [
+        {
+            /** recognition option */
+            recognition: {
+                /** split offset(top,right,bottom,left). */
+                offset: '0,0,0,0',
+                /** split space */
+                splitSpace: 10,
+            },
+            /** exports option */
+            exports: {
+                /** output dir, will overwrite global output. */
+                output: '',
+                /** output filename, will overwrite global filename. */
+                filename: '',
+                /** font size. default: [Auto] */
+                size: 0,
+                /** lineHeight. default: [Auto] */
+                lineHeight: 0,
+                // base: 0,
+                // maxWidth: 1024,
+                // maxHeight: 1024,
+                /** *.fnt file temp */
+                bmfFntTemp: '',
+            },
+            /** ext option */
+            ext: {
+                /** chars option */
+                chars: [
+                    {
+                        /** text */
+                        text: '',
+                        /** *.png file path */
+                        path: '',
+                    },
+                ],
+            },
+        },
+    ],
+};
+```
+
+### 注意事项
+
+-   **导出时 psd 背景必须是透明的，若使用导出的 png 图片则不要求 psd 背景透明**
+-   **若使用 psd 导出的 png 图片必须是背景透明的**
+-   **一种字体是一个分组，欲导出这种字体则分组名必须包含关键字(export?)**
+-   **分组中一段话是一个图层，且图层名每个字须与图一一对应**
+-   **必须要有明显的间距**
+
+## License
+
+**MIT**
+
+## Keywords
+
+**psd bmf bmfont fnt sprite**

@@ -1,37 +1,134 @@
 # psd2bmf
 
-#### Description
+This is a tool for converting PSD file directly to bmfont. All you need to do is provide a PSD file from the UI designer without any software dependencies or tedious operations.
 
-Convert the PSD to BMF.
+![example](./docs/example.jpg)
 
-#### Software Architecture
+### Install
 
-Software architecture description
+npm:
 
-#### Installation
+```shell
+$ npm install psd2bmf --save-dev
+```
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+yarn:
 
-#### Instructions
+```shell
+$ yarn add psd2bmf --dev
+```
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+### Usage
 
-#### Contribution
+From npm for use as a command line app:
 
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+```shell
+$ npm install -g psd2bmf
+```
 
-#### Gitee Feature
+#### Command line usage
 
-1.  You can use Readme_XXX.md to support different languages, such as Readme_en.md, Readme_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+```shell
+$ psd2bmf [options]
+```
+
+example:
+
+```shell
+$ psd2bmf -i input.psd -o output
+```
+
+#### Command line options
+
+```console
+    --version               	Print version number.
+    -h, --help                  Print usage information.
+    -i, --input      			PSD source file path.
+    -o, --output [options]   	Output dir.
+    -f, --filename [options]    Output filename.
+    -p, --png [options]        	PNG images exported based on PSD. TODO
+```
+
+#### Use in code
+
+It can also be locally installed and used in code:
+
+```javascript
+const { exec, run } = require('psd2bmf');
+
+// exec
+exec('test.psd'); // => test.fnt,test.png
+// or
+exec('test.psd', 'output'); // => output/test.fnt,output/test.png
+// or
+exec('test.psd', 'output', 'other'); // => output/other.fnt,output/other.png
+// run
+run(option);
+```
+
+##### option
+
+```javascript
+const option = {
+    /** (necessary)psd path. */
+    input: '',
+    /** psd export png file path. default: [psd_file_dir/psd_filename.png] */
+    inputPng: '',
+    /** global output dir. default: [psd_file_dir] */
+    output: '',
+    /** global filename. default: [psd_filename]*/
+    filename: '',
+    /** each group option */
+    groups: [
+        {
+            /** recognition option */
+            recognition: {
+                /** split offset(top,right,bottom,left). */
+                offset: '0,0,0,0',
+                /** split space */
+                splitSpace: 10,
+            },
+            /** exports option */
+            exports: {
+                /** output dir, will overwrite global output. */
+                output: '',
+                /** output filename, will overwrite global filename. */
+                filename: '',
+                /** font size. default: [Auto] */
+                size: 0,
+                /** lineHeight. default: [Auto] */
+                lineHeight: 0,
+                // base: 0,
+                // maxWidth: 1024,
+                // maxHeight: 1024,
+                /** *.fnt file temp */
+                bmfFntTemp: '',
+            },
+            /** ext option */
+            ext: {
+                /** chars option */
+                chars: [
+                    {
+                        /** text */
+                        text: '',
+                        /** *.png file path */
+                        path: '',
+                    },
+                ],
+            },
+        },
+    ],
+};
+```
+
+### Notice
+
+-   TODO
+
+## License
+
+**MIT**
+
+## Keywords
+
+**psd bmf bmfont fnt sprite**

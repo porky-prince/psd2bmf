@@ -5,19 +5,19 @@
 const exec = require('../dist/main').exec;
 const argv = require('yargs')
     .version()
-    .option('s', {
-        alias: 'src',
+    .option('i', {
+        alias: 'input',
         demand: true,
         describe: 'The psd file path.',
         type: 'string',
     })
-    .option('d', {
-        alias: 'dist',
+    .option('o', {
+        alias: 'output',
         describe: 'Global output dir.',
         type: 'string',
     })
     .option('f', {
-        alias: 'file',
+        alias: 'filename',
         describe: 'Global filename.',
         type: 'string',
     })
@@ -27,9 +27,9 @@ const argv = require('yargs')
         type: 'string',
     })
     .usage('psd2bmf [options]')
-    .example('psd2bmf -s test.psd')
+    .example('psd2bmf -i test.psd')
     .help('h')
     .alias('h', 'help')
     .epilog('MIT license').argv;
 
-exec(argv.src, argv.dist, argv.file, argv.png);
+exec(argv.input, argv.output, argv.filename, argv.png);

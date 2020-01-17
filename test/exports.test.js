@@ -17,7 +17,7 @@ function output(filename, extName) {
 async function execCmd(filename) {
     return new Promise((resolve) => {
         exec(
-            `node bin/psd2bmf.js -s ${input(filename)} -d ${OUTPUT}`,
+            `node bin/psd2bmf.js -i ${input(filename)} -o ${OUTPUT}`,
             {
                 cwd: ROOT,
             },
