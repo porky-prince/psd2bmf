@@ -40,7 +40,7 @@ $ psd2bmf -i input.psd -o output
 
 #### Command line options
 
-```console
+```
     --version               	Print version number.
     -h, --help                  Print usage information.
     -i, --input      			PSD source file path.

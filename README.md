@@ -40,7 +40,7 @@ $ psd2bmf -i input.psd -o output
 
 #### 命令行参数
 
-```console
+```
     --version               	查看版本。
     -h, --help                  查看帮助信息。
     -i, --input      			psd源文件路径。
