@@ -13,7 +13,8 @@
     },
     "files": [
         "bin",
-        "dist"
+        "dist",
+        "docs"
     ],
     "engines": {
         "node": ">=8.0.0"

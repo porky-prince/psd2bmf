@@ -124,11 +124,3 @@ const option = {
 ### Notice
 
 -   TODO
-
-## License
-
-**MIT**
-
-## Keywords
-
-**psd bmf bmfont fnt sprite**
