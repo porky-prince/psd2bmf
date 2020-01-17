@@ -2,7 +2,7 @@
 
 This is a tool for converting PSD file directly to bmfont. All you need to do is provide a PSD file from the UI designer without any software dependencies or tedious operations.
 
-![example](./docs/example.jpg)
+![example](https://gitee.com/porky-prince/psd2bmf/raw/master/docs/example.jpg)
 
 ### Install
 
