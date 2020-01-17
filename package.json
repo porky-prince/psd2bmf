@@ -1,6 +1,6 @@
 {
     "name": "psd2bmf",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Convert the PSD to BMF.",
     "license": "MIT",
     "author": "Kay",
