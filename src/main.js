@@ -77,11 +77,12 @@ function recognition(srcPng, group) {
                     end++;
                     spaceCount = 0;
                     break;
-                } else if (!isNaN(start) && y === yLen - 1) {
                     // start不为NaN说明已经开始了一个字的识别
-                    spaceCount++; // 一列都是透明
+                    // 且当一列都是透明时
+                } else if (!isNaN(start) && y === yLen - 1) {
+                    spaceCount++;
+                    // 当连续超过splitSpace列透明时则这个字识别结束
                     if (spaceCount > splitSpace) {
-                        // 当连续超过splitSpace列透明时则这个字识别结束
                         const font = new Font(
                             layer.getFontText(fontCount, true)
                         );
@@ -93,7 +94,8 @@ function recognition(srcPng, group) {
                         );
                         fonts.push(font);
                         fontCount++;
-                        start = NaN; // 从新开始识别下一个字
+                        // 从新开始识别下一个字
+                        start = NaN;
                     } else {
                         end++;
                     }
