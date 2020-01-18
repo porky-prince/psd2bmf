@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0-beta.3](https://gitee.com/porky-prince/psd2bmf/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2020-01-18)
+
+
+### Bug Fixes
+
+* **src:** 默认识别间隔(splitSpace)调整 ([3350ece](https://gitee.com/porky-prince/psd2bmf/commit/3350ecee50d99f99ea55fa3a4291ee567e81b862))
+
 ## [1.1.0-beta.2](https://gitee.com/porky-prince/psd2bmf/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2020-01-17)
 
 ## [1.1.0-beta.1](https://gitee.com/porky-prince/psd2bmf/compare/v1.1.0-beta.0...v1.1.0-beta.1) (2020-01-17)
