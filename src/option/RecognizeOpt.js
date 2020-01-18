@@ -3,7 +3,7 @@ import Offset from './Offset';
 export default class RecognizeOpt {
     constructor() {
         this._offset = new Offset();
-        this._splitSpace = 10;
+        this._splitSpace = 8;
     }
 
     get offset() {

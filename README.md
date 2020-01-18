@@ -41,14 +41,14 @@ $ psd2bmf -i input.psd -o output
 #### 命令行参数
 
 ```
-    --version               	查看版本。
+    --version                   查看版本。
     -h, --help                  查看帮助信息。
-    -i, --input      			psd源文件路径。
-    -o, --output [options]   	输出目录，不传则默认输出在psd源文件目录下。
+    -i, --input                 psd源文件路径。
+    -o, --output [options]      输出目录，不传则默认输出在psd源文件目录下。
     -f, --filename [options]    输出文件文件名，不传则默认与psd源文件同名。
     -p, --png [options]        	使用PhotoShop导出的png图片，如果指定则会使用此png图片数据，
-    							默认会在psd源文件的目录下查找，找到则使用，找不到则使用psd源文件
-    							中的数据，使用PhotoShop导出的png图片质量比使用psd源文件中的更高。
+                                默认会在psd源文件的目录下查找，找到则使用，找不到则使用psd源文件
+                                中的数据，使用PhotoShop导出的png图片质量比使用psd源文件中的更高。
 ```
 
 #### 在代码中使用
@@ -87,8 +87,8 @@ const option = {
             recognition: {
                 /** split offset(top,right,bottom,left). */
                 offset: '0,0,0,0',
-                /** split space */
-                splitSpace: 10,
+                /** split space(px) */
+                splitSpace: 8,
             },
             /** exports option */
             exports: {

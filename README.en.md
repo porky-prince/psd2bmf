@@ -43,7 +43,7 @@ $ psd2bmf -i input.psd -o output
 ```
     --version               	Print version number.
     -h, --help                  Print usage information.
-    -i, --input      			PSD source file path.
+    -i, --input                 PSD source file path.
     -o, --output [options]   	Output dir.
     -f, --filename [options]    Output filename.
     -p, --png [options]        	PNG images exported based on PSD. TODO
@@ -85,8 +85,8 @@ const option = {
             recognition: {
                 /** split offset(top,right,bottom,left). */
                 offset: '0,0,0,0',
-                /** split space */
-                splitSpace: 10,
+                /** split space(px) */
+                splitSpace: 8,
             },
             /** exports option */
             exports: {

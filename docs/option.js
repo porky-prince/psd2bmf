@@ -14,8 +14,8 @@ export const option = {
             recognition: {
                 /** split offset(top,right,bottom,left). */
                 offset: '0,0,0,0',
-                /** split space */
-                splitSpace: 10,
+                /** split space(px) */
+                splitSpace: 8,
             },
             /** exports option */
             exports: {
