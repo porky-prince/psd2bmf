@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0-beta.4](https://gitee.com/porky-prince/psd2bmf/compare/v1.1.0-beta.3...v1.1.0-beta.4) (2020-01-19)
+
+
+### Bug Fixes
+
+* **src:** bug修复以及添加错误日志 ([0ef29a6](https://gitee.com/porky-prince/psd2bmf/commit/0ef29a67205801bc8beeca547eb8f003e538814b))
+
 ## [1.1.0-beta.3](https://gitee.com/porky-prince/psd2bmf/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2020-01-18)
 
 
