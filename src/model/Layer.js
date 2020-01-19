@@ -46,4 +46,18 @@ export default class Layer {
         if (must) nameError(name);
         return name;
     }
+
+    showNoCorrespondingError(fontCount) {
+        const name = this._name;
+        if (fontCount !== name.length)
+            throw new Error(
+                'There is no one-to-one correspondence between the graph and the word:' +
+                    '\n\tLayer name(trim):' +
+                    name +
+                    '\n\tRecognizable font count:' +
+                    fontCount +
+                    '\n\tVisible font count:' +
+                    name.length
+            );
+    }
 }

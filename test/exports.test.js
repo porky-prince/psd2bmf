@@ -21,7 +21,10 @@ async function execCmd(filename) {
             {
                 cwd: ROOT,
             },
-            resolve
+            (error, stdout, stderr) => {
+                // console.log(stderr);
+                resolve();
+            }
         );
     });
 }
@@ -32,14 +35,14 @@ async function isExist(filename, extName) {
     });
 }
 
-async function judgeExist(filename, extName) {
-    expect(await isExist(filename, extName)).toBe(true);
+async function judgeExist(filename, extName, flag) {
+    expect(await isExist(filename, extName)).toBe(flag);
 }
 
-async function judgeExists(filename) {
+async function judgeExists(filename, flag) {
     return Promise.all([
-        judgeExist(filename, FNT_EXT),
-        judgeExist(filename, PNG_EXT),
+        judgeExist(filename, FNT_EXT, flag),
+        judgeExist(filename, PNG_EXT, flag),
     ]);
 }
 
@@ -48,7 +51,7 @@ function testOne(filename) {
         test(`A ${filename + FNT_EXT} and a ${filename +
             PNG_EXT} will be output`, async () => {
             await execCmd(filename);
-            await judgeExists(filename);
+            await judgeExists(filename, true);
         });
     });
 }
@@ -58,7 +61,27 @@ function testMultiple(filename, num) {
         test(`${num} fnt files and ${num} png files will be output`, async () => {
             await execCmd(filename);
             for (let i = 0; i < num; i++) {
-                await judgeExists(filename + '_' + i);
+                await judgeExists(filename + '_' + i, true);
+            }
+        });
+    });
+}
+
+function testOneErr(filename) {
+    describe(`Test ${filename + PSD_EXT}`, () => {
+        test('There is no output', async () => {
+            await execCmd(filename);
+            await judgeExists(filename, false);
+        });
+    });
+}
+
+function testMultipleErr(filename, num) {
+    describe(`Test ${filename + PSD_EXT}`, () => {
+        test('There is no output', async () => {
+            await execCmd(filename);
+            for (let i = 0; i < num; i++) {
+                await judgeExists(filename + '_' + i, false);
             }
         });
     });
@@ -78,4 +101,8 @@ describe('Export', () => {
     testOne('recognize_param');
 
     testMultiple('mix', 2);
+
+    testOneErr('numberErr');
+
+    testMultipleErr('numbersErr', 3);
 });

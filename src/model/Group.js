@@ -13,7 +13,6 @@ export default class Group {
         this._onlyOne = false;
         this._group = null;
         this._layers = null;
-        this._maxLayerHeight = 0;
     }
 
     init(index, data) {
@@ -23,6 +22,7 @@ export default class Group {
             this.groupOpt.recognition = data.name.slice(
                 data.name.indexOf(EXPORT_KEY) + EXPORT_KEY.length
             );
+            this._maxLayerHeight = 0;
             this.createLayers();
         }
     }

@@ -14,7 +14,7 @@ async function runTask(option) {
     let srcPng = await readPng(option.inputPng);
     if (srcPng === null) {
         console.warn(
-            'Png image exported with PhotoShop are of higher quality!'
+            'Png image exported with PhotoShop are of higher quality.'
         );
         srcPng = createPng(psd.image.width(), psd.image.height());
         srcPng.data = Buffer.from(psd.image.pixelData);
@@ -41,7 +41,7 @@ async function runTask(option) {
 function recognition(srcPng, group) {
     const srcPngData = srcPng.data;
     if (srcPngData[3] > 0)
-        throw new Error('Are you sure the image background is transparent?');
+        throw new Error('Are you sure the background is transparent?');
     const layers = group.layers;
     const splitSpace = group.recognizeOpt.splitSpace;
     const maxLayerHeight = group.maxLayerHeight;
@@ -51,8 +51,8 @@ function recognition(srcPng, group) {
         if (
             layer.x < 0 ||
             layer.y < 0 ||
-            layer.width > srcPng.width ||
-            layer.height > srcPng.height
+            layer.x + layer.width > srcPng.width ||
+            layer.y + layer.height > srcPng.height
         ) {
             throw new Error('Layer is out of bounds!');
         }
@@ -64,7 +64,7 @@ function recognition(srcPng, group) {
         let spaceCount = 0;
         let fontCount = 0;
         const xLen = Math.min(
-            layer.x + layer.width + splitSpace * 1.5,
+            layer.x + layer.width + splitSpace * 2,
             srcPng.width
         );
         const yLen = layer.y + layer.height;
@@ -102,6 +102,7 @@ function recognition(srcPng, group) {
                 }
             }
         }
+        layer.showNoCorrespondingError(fontCount);
         layer.hasSpace() && fonts.push(new Font(SPACE));
         layer.hasTab() && fonts.push(new Font(TAB));
     }
