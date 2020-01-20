@@ -44,18 +44,12 @@ function recognition(srcPng, group) {
         throw new Error('Are you sure the background is transparent?');
     const layers = group.layers;
     const splitSpace = group.recognizeOpt.splitSpace;
+    const padding = group.recognizeOpt.padding;
     const maxLayerHeight = group.maxLayerHeight;
     const fonts = [];
     for (let i = 0, length = layers.length; i < length; i++) {
         let layer = layers[i];
-        if (
-            layer.x < 0 ||
-            layer.y < 0 ||
-            layer.x + layer.width > srcPng.width ||
-            layer.y + layer.height > srcPng.height
-        ) {
-            throw new Error('Layer is out of bounds!');
-        }
+        layer.showOutOfBoundsError(srcPng.width, srcPng.height);
 
         group.exportsOpt.setDefault(layer.size, layer.size);
 
@@ -64,7 +58,7 @@ function recognition(srcPng, group) {
         let spaceCount = 0;
         let fontCount = 0;
         const xLen = Math.min(
-            layer.x + layer.width + splitSpace * 2,
+            layer.x + layer.width + (splitSpace << 1),
             srcPng.width
         );
         const yLen = layer.y + layer.height;
@@ -88,9 +82,11 @@ function recognition(srcPng, group) {
                         );
                         font.setBound(
                             start,
-                            layer.y - (maxLayerHeight - layer.height),
+                            layer.y -
+                                Math.ceil((maxLayerHeight - layer.height) >> 1),
                             end - splitSpace - start,
-                            maxLayerHeight
+                            maxLayerHeight,
+                            padding
                         );
                         fonts.push(font);
                         fontCount++;
@@ -187,10 +183,10 @@ async function exportPng(srcPng, layoutInfo, outputPath) {
             distPng,
             font.posX,
             font.posY,
-            font.width,
-            font.height,
-            font.x,
-            font.y
+            font.actualWidth,
+            font.actualHeight,
+            font.x + font.padding,
+            font.y + font.padding
         );
     }
     await writePng(outputPath + PNG_EXT, distPng);

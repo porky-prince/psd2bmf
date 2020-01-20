@@ -98,9 +98,9 @@ describe('Export', () => {
 
     testMultiple('numbers', 3);
 
-    testOne('recognize_param');
+    testMultiple('recognize_param', 2);
 
-    testMultiple('mix', 2);
+    testOne('mix');
 
     testOneErr('numberErr');
 

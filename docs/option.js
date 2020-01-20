@@ -1,4 +1,4 @@
-export const option = {
+const option = {
     /** (necessary)psd path. */
     input: '',
     /** psd export png file path. default: [psd_file_dir/psd_filename.png] */
@@ -16,6 +16,8 @@ export const option = {
                 offset: '0,0,0,0',
                 /** split space(px) */
                 splitSpace: 8,
+                /** split padding(px) */
+                padding: 0,
             },
             /** exports option */
             exports: {

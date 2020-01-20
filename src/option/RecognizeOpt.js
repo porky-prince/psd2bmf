@@ -4,6 +4,7 @@ export default class RecognizeOpt {
     constructor() {
         this._offset = new Offset();
         this._splitSpace = 8;
+        this._padding = 0;
     }
 
     get offset() {
@@ -23,7 +24,15 @@ export default class RecognizeOpt {
             if (value < this._splitSpace / 2) {
                 console.warn('The splitSpace is small.');
             }
-            this._splitSpace = value;
+            this._splitSpace = Math.round(value);
         }
+    }
+
+    get padding() {
+        return this._padding;
+    }
+
+    set padding(value) {
+        if (value > 0) this._padding = Math.round(value);
     }
 }

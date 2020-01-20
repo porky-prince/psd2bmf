@@ -47,6 +47,17 @@ export default class Layer {
         return name;
     }
 
+    showOutOfBoundsError(maxWidth, maxHeight) {
+        if (
+            this.x < 0 ||
+            this.y < 0 ||
+            this.x + this.width > maxWidth ||
+            this.y + this.height > maxHeight
+        ) {
+            throw new Error('Layer is out of bounds!');
+        }
+    }
+
     showNoCorrespondingError(fontCount) {
         const name = this._name;
         if (fontCount !== name.length)

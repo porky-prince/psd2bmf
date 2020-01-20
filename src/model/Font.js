@@ -7,7 +7,7 @@ export class Font {
         this._text = '';
         this._path = '';
         this.text = text;
-        this.setBound(0, 0, 0, 0);
+        this.setBound(0, 0, 0, 0, 0);
         this.pos(0, 0);
     }
 
@@ -52,16 +52,34 @@ export class Font {
         return png;
     }
 
-    setBound(posX, posY, width, height) {
+    setBound(posX, posY, actualWidth, actualHeight, padding) {
         this.posX = posX;
         this.posY = posY;
-        this.width = width;
-        this.height = height;
-        this.xadvance = width;
+        this.actualWidth = actualWidth;
+        this.actualHeight = actualHeight;
+        this.padding = padding;
     }
 
     pos(x, y) {
         this.x = x;
         this.y = y;
+    }
+
+    size(width, height) {
+        this.width = width;
+        this.height = height;
+        this.xadvance = width;
+    }
+
+    get padding() {
+        return this._padding;
+    }
+
+    set padding(padding) {
+        this._padding = padding;
+        this.size(
+            this.actualWidth + (padding << 1),
+            this.actualHeight + (padding << 1)
+        );
     }
 }

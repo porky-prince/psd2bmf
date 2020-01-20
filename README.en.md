@@ -87,6 +87,8 @@ const option = {
                 offset: '0,0,0,0',
                 /** split space(px) */
                 splitSpace: 8,
+                /** split padding(px) */
+                padding: 0,
             },
             /** exports option */
             exports: {
