@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0-beta.5](https://gitee.com/porky-prince/psd2bmf/compare/v1.1.0-beta.4...v1.1.0-beta.5) (2020-01-20)
+
+
+### Features
+
+* **src:** 添加padding参数 ([06992aa](https://gitee.com/porky-prince/psd2bmf/commit/06992aae390e4a5f079607484d5105502f9c1b19))
+
 ## [1.1.0-beta.4](https://gitee.com/porky-prince/psd2bmf/compare/v1.1.0-beta.3...v1.1.0-beta.4) (2020-01-19)
 
 
