@@ -83,7 +83,7 @@ function recognition(srcPng, group) {
                         font.setBound(
                             start,
                             layer.y -
-                                Math.ceil((maxLayerHeight - layer.height) >> 1),
+                                Math.ceil((maxLayerHeight - layer.height) / 2),
                             end - splitSpace - start,
                             maxLayerHeight,
                             padding
