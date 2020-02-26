@@ -1,19 +1,29 @@
-logs
-*.log
-npm-debug.log*
-.eslintcache
-
-/coverage
-/dist
-/local
-/reports
-/node_modules
-/test/output
-
-.DS_Store
-Thumbs.db
+# IDE
 .idea
 .vscode
 *.sublime-project
 *.sublime-workspace
-*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules
+
+# log
+logs
+*.log
+
+# npm-debug log
+npm-debug.*
+
+# Jest Coverage
+coverage
+
+# eslint
+.eslintcache
+
+# custom
+dist
+test/output

@@ -4,110 +4,112 @@ import { ENCODING } from './const';
 const Placeholder = '<!-- CharTemp -->';
 
 function getRegByKey(key) {
-    return new RegExp(`${key}\\s*=\\s*""`);
+	return new RegExp(`${key}\\s*=\\s*""`);
 }
 
 function replace(content, key, value) {
-    const reg = getRegByKey(key);
-    const res = reg.exec(content);
-    if (res !== null) {
-        let temp = res[0].replace('""', `"${value}"`);
-        content = content.replace(reg, temp);
-    }
-    return content;
+	const reg = getRegByKey(key);
+	const res = reg.exec(content);
+	if (res !== null) {
+		let temp = res[0].replace('""', `"${value}"`);
+		content = content.replace(reg, temp);
+	}
+
+	return content;
 }
 
 export default class BmfFntParser {
-    constructor() {
-        this._path = '';
-        this._content = '';
-        this._charTemp = '';
-        this._chars = {};
-    }
+	constructor() {
+		this._path = '';
+		this._content = '';
+		this._charTemp = '';
+		this._chars = {};
+	}
 
-    get path() {
-        return this._path;
-    }
+	get path() {
+		return this._path;
+	}
 
-    set path(value) {
-        if (this._path !== value) {
-            this._path = value;
-            this._content = '';
-        }
-    }
+	set path(value) {
+		if (this._path !== value) {
+			this._path = value;
+			this._content = '';
+		}
+	}
 
-    async parse(path) {
-        this.path = path;
-        let content = this._content;
-        if (content === '') {
-            content = await readFile(this._path, ENCODING);
-            if (content === null) content = await readBmfTemp();
-            this._content = content;
-            this.extractCharTemp(content);
-        }
-        return content;
-    }
+	async parse(path) {
+		this.path = path;
+		let content = this._content;
+		if (content === '') {
+			content = await readFile(this._path, ENCODING);
+			if (content === null) content = await readBmfTemp();
+			this._content = content;
+			this.extractCharTemp(content);
+		}
 
-    async reparse() {
-        this._content = '';
-        await this.parse();
-    }
+		return content;
+	}
 
-    extractCharTemp() {
-        const content = this._content;
-        const reg = /<char\s+[\w\s="]+\/>/;
-        const res = reg.exec(content);
-        if (res !== null) {
-            this._charTemp = res[0];
-            this._content = content.replace(reg, Placeholder);
-        } else {
-            throw new Error("The char temp '<char id ...' dose not find!");
-        }
-    }
+	async reparse() {
+		this._content = '';
+		await this.parse();
+	}
 
-    replace(key, value) {
-        this._content = replace(this._content, key, value);
-    }
+	extractCharTemp() {
+		const content = this._content;
+		const reg = /<char\s+[\w\s="]+\/>/;
+		const res = reg.exec(content);
+		if (res === null) throw new Error("The char temp '<char id ...' dose not find!");
 
-    addChar(font) {
-        let id = font.id;
-        if (!this.hasChar(id)) {
-            let temp = this._charTemp;
-            temp = replace(temp, 'id', id);
-            temp = replace(temp, 'x', font.x);
-            temp = replace(temp, 'y', font.y);
-            temp = replace(temp, 'width', font.width);
-            temp = replace(temp, 'height', font.height);
-            temp = replace(temp, 'xadvance', font.xadvance);
-            this._chars[id] = temp;
-            return true;
-        }
-        return false;
-    }
+		this._charTemp = res[0];
+		this._content = content.replace(reg, Placeholder);
+	}
 
-    hasChar(id) {
-        return id in this._chars;
-    }
+	replace(key, value) {
+		this._content = replace(this._content, key, value);
+	}
 
-    removeChar(id) {
-        delete this._chars[id];
-    }
+	addChar(font) {
+		let id = font.id;
+		if (!this.hasChar(id)) {
+			let temp = this._charTemp;
+			temp = replace(temp, 'id', id);
+			temp = replace(temp, 'x', font.x);
+			temp = replace(temp, 'y', font.y);
+			temp = replace(temp, 'width', font.width);
+			temp = replace(temp, 'height', font.height);
+			temp = replace(temp, 'xadvance', font.xadvance);
+			this._chars[id] = temp;
+			return true;
+		}
 
-    clearChars() {
-        this._chars = {};
-    }
+		return false;
+	}
 
-    toBmfFnt() {
-        let chars = '';
-        let ids = Object.keys(this._chars);
-        for (let i = 0, length = ids.length; i < length; i++) {
-            chars += this._chars[ids[i]];
-            if (i !== length - 1) chars += '\n\t\t';
-        }
-        return this._content.replace(Placeholder, chars);
-    }
+	hasChar(id) {
+		return id in this._chars;
+	}
 
-    async save2BmfFnt(output) {
-        await writeFile(output, this.toBmfFnt(), ENCODING);
-    }
+	removeChar(id) {
+		delete this._chars[id];
+	}
+
+	clearChars() {
+		this._chars = {};
+	}
+
+	toBmfFnt() {
+		let chars = '';
+		let ids = Object.keys(this._chars);
+		for (let i = 0, length = ids.length; i < length; i++) {
+			chars += this._chars[ids[i]];
+			if (i !== length - 1) chars += '\n\t\t';
+		}
+
+		return this._content.replace(Placeholder, chars);
+	}
+
+	async save2BmfFnt(output) {
+		await writeFile(output, this.toBmfFnt(), ENCODING);
+	}
 }

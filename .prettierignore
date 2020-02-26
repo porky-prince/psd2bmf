@@ -1,5 +1,6 @@
-/coverage
-/dist
-/node_modules
-/.gitee
+coverage
+node_modules
+.gitee
+.github
 CHANGELOG.md
+dist

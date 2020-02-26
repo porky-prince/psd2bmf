@@ -2,7 +2,9 @@
 
 这是一个直接将 psd 文件转换为 bmfont 的工具，只需要 UI 设计师提供一个 psd 文件即可，无需任何软件依赖以及没有繁琐的操作。
 
-![example](https://gitee.com/porky-prince/psd2bmf/raw/master/docs/example.jpg)
+[example-img]: docs/example.jpg
+
+![example][example-img]
 
 ### 安装
 
@@ -71,57 +73,54 @@ run(option);
 ##### option
 
 ```javascript
-const option = {
-    /** (necessary)psd path. */
-    input: '',
-    /** psd export png file path. default: [psd_file_dir/psd_filename.png] */
-    inputPng: '',
-    /** global output dir. default: [psd_file_dir] */
-    output: '',
-    /** global filename. default: [psd_filename]*/
-    filename: '',
-    /** each group option */
-    groups: [
-        {
-            /** recognition option */
-            recognition: {
-                /** split offset(top,right,bottom,left). */
-                offset: '0,0,0,0',
-                /** split space(px) */
-                splitSpace: 8,
-                /** split padding(px) */
-                padding: 0,
-            },
-            /** exports option */
-            exports: {
-                /** output dir, will overwrite global output. */
-                output: '',
-                /** output filename, will overwrite global filename. */
-                filename: '',
-                /** font size. default: [Auto] */
-                size: 0,
-                /** lineHeight. default: [Auto] */
-                lineHeight: 0,
-                // base: 0,
-                // maxWidth: 1024,
-                // maxHeight: 1024,
-                /** *.fnt file temp */
-                bmfFntTemp: '',
-            },
-            /** ext option */
-            ext: {
-                /** chars option */
-                chars: [
-                    {
-                        /** text */
-                        text: '',
-                        /** *.png file path */
-                        path: '',
-                    },
-                ],
-            },
-        },
-    ],
+module.exports = {
+	/** (necessary)psd path. */
+	input: '',
+	/** Psd export png file path. default: [psd_file_dir/psd_filename.png] */
+	inputPng: '',
+	/** Global output dir. default: [psd_file_dir] */
+	output: '',
+	/** Global filename. default: [psd_filename] */
+	filename: '',
+	/** Each group option */
+	groups: [
+		{
+			/** Recognition option */
+			recognition: {
+				/** Split offset(top,right,bottom,left). */
+				offset: '0,0,0,0',
+				/** Split space(px) */
+				splitSpace: 8,
+				/** Split padding(px) */
+				padding: 0,
+			},
+			/** Exports option */
+			exports: {
+				/** Output dir, will overwrite global output. */
+				output: '',
+				/** Output filename, will overwrite global filename. */
+				filename: '',
+				/** Font size. default: [Auto] */
+				size: 0,
+				/** LineHeight. default: [Auto] */
+				lineHeight: 0,
+				/** *.fnt file temp */
+				bmfFntTemp: '',
+			},
+			/** Ext option */
+			ext: {
+				/** Chars option */
+				chars: [
+					{
+						/** Text */
+						text: '',
+						/** *.png file path */
+						path: '',
+					},
+				],
+			},
+		},
+	],
 };
 ```
 

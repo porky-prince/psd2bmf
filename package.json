@@ -1,66 +1,68 @@
 {
-    "name": "psd2bmf",
-    "version": "1.1.1",
-    "description": "Convert the PSD to BMF.",
-    "license": "MIT",
-    "author": "Kay",
-    "homepage": "https://gitee.com/porky-prince/psd2bmf#readme",
-    "repository": "https://gitee.com/porky-prince/psd2bmf",
-    "bugs": "https://gitee.com/porky-prince/psd2bmf/issues",
-    "main": "dist/main.js",
-    "bin": {
-        "psd2bmf": "bin/psd2bmf.js"
-    },
-    "files": [
-        "bin",
-        "dist"
-    ],
-    "engines": {
-        "node": ">=8.0.0"
-    },
-    "scripts": {
-        "start": "npm run build -- -w -s inline",
-        "clean": "del-cli dist",
-        "prebuild": "npm run clean",
-        "commitlint": "commitlint --from=master",
-        "lint:prettier": "prettier \"{**/*,*}.{js,json,md}\" -l",
-        "lint:js": "eslint --cache .",
-        "lint": "npm-run-all -l -p \"lint:**\"",
-        "pretest": "npm run lint && del-cli test/output",
-        "test": "jest",
-        "build": "babel src -d dist --copy-files",
-        "release": "standard-version"
-    },
-    "devDependencies": {
-        "@babel/cli": "^7.7.7",
-        "@babel/core": "^7.7.7",
-        "@babel/preset-env": "^7.7.7",
-        "@commitlint/cli": "^8.3.5",
-        "@commitlint/config-conventional": "^8.3.4",
-        "babel-jest": "^24.9.0",
-        "del": "^5.1.0",
-        "del-cli": "^3.0.0",
-        "eslint": "^6.8.0",
-        "eslint-config-prettier": "^6.9.0",
-        "eslint-plugin-import": "^2.20.0",
-        "husky": "^4.0.10",
-        "jest": "^24.9.0",
-        "lint-staged": "^9.5.0",
-        "npm-run-all": "^4.1.5",
-        "prettier": "1.19.1",
-        "standard-version": "^7.0.1"
-    },
-    "dependencies": {
-        "fs-extra": "^8.1.0",
-        "layout": "^2.2.0",
-        "psd": "^3.2.0",
-        "yargs": "^15.1.0"
-    },
-    "keywords": [
-        "psd",
-        "bmf",
-        "bmfont",
-        "fnt",
-        "sprite"
-    ]
+	"name": "psd2bmf",
+	"version": "1.1.1",
+	"description": "Convert the psd to bmfont.",
+	"license": "MIT",
+	"author": "Porky Kay",
+	"homepage": "https://gitee.com/porky-prince/psd2bmf#readme",
+	"repository": "https://gitee.com/porky-prince/psd2bmf",
+	"bugs": "https://gitee.com/porky-prince/psd2bmf/issues",
+	"main": "dist/main.js",
+	"bin": {
+		"psd2bmf": "bin/psd2bmf.js"
+	},
+	"files": [
+		"bin",
+		"dist"
+	],
+	"engines": {
+		"node": ">=8.0.0"
+	},
+	"scripts": {
+		"start": "npm run build -- -w -s inline",
+		"clean": "del-cli dist",
+		"prebuild": "npm run clean",
+		"commitlint": "commitlint --from=master",
+		"lint:prettier": "prettier \"{**/*,*}.{js,json,md}\" -l",
+		"lint:js": "eslint --cache .",
+		"lint": "npm-run-all -l -p \"lint:**\"",
+		"pretest": "npm run lint && del-cli test/output",
+		"test": "jest",
+		"build": "babel src -d dist --copy-files",
+		"release": "standard-version"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.7.7",
+		"@babel/core": "^7.7.7",
+		"@babel/preset-env": "^7.7.7",
+		"@commitlint/cli": "^8.3.5",
+		"@commitlint/config-conventional": "^8.3.4",
+		"babel-jest": "^24.9.0",
+		"del": "^5.1.0",
+		"del-cli": "^3.0.0",
+		"eslint": "^6.8.0",
+		"eslint-config-prettier": "^6.9.0",
+		"eslint-config-xo": "^0.29.1",
+		"eslint-plugin-import": "^2.20.0",
+		"eslint-plugin-prettier": "^3.1.2",
+		"husky": "^4.0.10",
+		"jest": "^24.9.0",
+		"lint-staged": "^9.5.0",
+		"npm-run-all": "^4.1.5",
+		"prettier": "1.19.1",
+		"standard-version": "^7.0.1"
+	},
+	"dependencies": {
+		"fs-extra": "^8.1.0",
+		"layout": "^2.2.0",
+		"psd": "^3.2.0",
+		"yargs": "^15.1.0"
+	},
+	"keywords": [
+		"psd",
+		"bmf",
+		"bmfont",
+		"fnt",
+		"sprite"
+	]
 }
