@@ -1,7 +1,7 @@
-### 相关的 Issue
+### Related issue
 
-### 原因（目的、解决的问题等）
+### Cause (purpose, problem solved, etc.)
 
-### 描述（做了什么，变更了什么）
+### Description (what was done, changed)
 
-### 测试用例
+### Test case

@@ -1,5 +1,5 @@
-### 该问题是怎么引起的？
+### How did the problem arise?
 
-### 重现步骤
+### Repeat steps
 
-### 报错信息
+### Error message
