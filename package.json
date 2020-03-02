@@ -16,7 +16,7 @@
 		"dist"
 	],
 	"engines": {
-		"node": ">=8.0.0"
+		"node": ">=10"
 	},
 	"scripts": {
 		"start": "npm run build -- -w -s inline",
@@ -53,9 +53,9 @@
 		"standard-version": "^7.0.1"
 	},
 	"dependencies": {
+		"@porky-prince/psd": "^3.2.3",
 		"fs-extra": "^8.1.0",
 		"layout": "^2.2.0",
-		"psd": "^3.2.0",
 		"yargs": "^15.1.0"
 	},
 	"keywords": [

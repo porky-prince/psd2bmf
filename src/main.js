@@ -1,5 +1,5 @@
 import path from 'path';
-import PSD from 'psd';
+import PSD from '@porky-prince/psd';
 import Group from './model/Group';
 import getLayout from 'layout';
 import Option from './option/Option';

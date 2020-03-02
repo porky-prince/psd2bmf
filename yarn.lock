@@ -989,6 +989,18 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
+"@porky-prince/psd@^3.2.3":
+  version "3.2.3"
+  resolved "https://registry.npm.taobao.org/@porky-prince/psd/download/@porky-prince/psd-3.2.3.tgz#b4871cc4eb7acd820d8feb520ec7078047dea904"
+  integrity sha1-tIccxOt6zYINj+tSDscHgEfeqQQ=
+  dependencies:
+    iconv-lite "^0.5.1"
+    jspack "^0.0.4"
+    lodash "^4.17.15"
+    parse-engine-data "^0.1.2"
+    pngjs "^3.4.0"
+    rsvp "^4.8.5"
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -1737,18 +1749,6 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
-
-"coffee-script@~ 1.7.1":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.7.1.tgz#62996a861780c75e6d5069d13822723b73404bfc"
-  integrity sha1-YplqhheAx15tUGnROCJyO3NAS/w=
-  dependencies:
-    mkdirp "~0.3.5"
-
-"coffeescript-module@~ 0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/coffeescript-module/-/coffeescript-module-0.2.1.tgz#2c61aa86983cacd226719f9f1dda923cb0ae67b0"
-  integrity sha1-LGGqhpg8rNImcZ+fHdqSPLCuZ7A=
 
 collection-visit@^1.0.0:
   version "1.0.0"
@@ -3215,10 +3215,17 @@ husky@^4.0.10:
     slash "^3.0.0"
     which-pm-runs "^1.0.0"
 
-iconv-lite@0.4.24, iconv-lite@^0.4.24, iconv-lite@^0.4.4, "iconv-lite@~ 0.4.4":
+iconv-lite@0.4.24, iconv-lite@^0.4.24, iconv-lite@^0.4.4:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
   integrity sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==
+  dependencies:
+    safer-buffer ">= 2.1.2 < 3"
+
+iconv-lite@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.npm.taobao.org/iconv-lite/download/iconv-lite-0.5.1.tgz?cache=0&sync_timestamp=1579333981154&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ficonv-lite%2Fdownload%2Ficonv-lite-0.5.1.tgz#b2425d3c7b18f7219f2ca663d103bddb91718d64"
+  integrity sha1-skJdPHsY9yGfLKZj0QO925FxjWQ=
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
@@ -4114,9 +4121,9 @@ jsonparse@^1.2.0:
   resolved "https://registry.yarnpkg.com/jsonparse/-/jsonparse-1.3.1.tgz#3f4dae4a91fac315f71062f8521cc239f1366280"
   integrity sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=
 
-"jspack@~ 0.0.3":
+jspack@^0.0.4:
   version "0.0.4"
-  resolved "https://registry.yarnpkg.com/jspack/-/jspack-0.0.4.tgz#32dd35c7fdcb3e3456c18fbb7ef9ed0bc6238177"
+  resolved "https://registry.npm.taobao.org/jspack/download/jspack-0.0.4.tgz#32dd35c7fdcb3e3456c18fbb7ef9ed0bc6238177"
   integrity sha1-Mt01x/3LPjRWwY+7fvntC8YjgXc=
 
 jsprim@^1.2.2:
@@ -4340,11 +4347,6 @@ lodash@4.17.15, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
-
-"lodash@~ 2.4":
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-2.4.2.tgz#fadd834b9683073da179b3eae6d9c0d15053f73e"
-  integrity sha1-+t2DS5aDBz2hebPq5tnA0VBT9z4=
 
 log-symbols@^1.0.2:
   version "1.0.2"
@@ -4575,11 +4577,6 @@ mkdirp@^0.5.1:
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
-
-mkdirp@~0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.3.5.tgz#de3e5f8961c88c787ee1368df849ac4413eca8d7"
-  integrity sha1-3j5fiWHIjHh+4TaN+EmsRBPsqNc=
 
 modify-values@^1.0.0:
   version "1.0.1"
@@ -4940,9 +4937,9 @@ parent-module@^1.0.0:
   dependencies:
     callsites "^3.0.0"
 
-"parse-engine-data@~ 0.1":
+parse-engine-data@^0.1.2:
   version "0.1.2"
-  resolved "https://registry.yarnpkg.com/parse-engine-data/-/parse-engine-data-0.1.2.tgz#5161f6133c9888f52155ecced42716575dfea052"
+  resolved "https://registry.npm.taobao.org/parse-engine-data/download/parse-engine-data-0.1.2.tgz#5161f6133c9888f52155ecced42716575dfea052"
   integrity sha1-UWH2EzyYiPUhVezO1CcWV13+oFI=
   dependencies:
     iconv-lite "^0.4.4"
@@ -5139,10 +5136,10 @@ pn@^1.1.0:
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
   integrity sha512-2qHaIQr2VLRFoxe2nASzsV6ef4yOOH+Fi9FBOVH6cqeSgUnoyySPZkxzLuzd+RYOQTRpROA0ztTMqxROKSb/nA==
 
-pngjs@3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.2.0.tgz#fc9fcea1a8a375da54a51148019d5abd41dbabde"
-  integrity sha1-/J/OoaijddpUpRFIAZ1avUHbq94=
+pngjs@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.npm.taobao.org/pngjs/download/pngjs-3.4.0.tgz#99ca7d725965fb655814eaf65f38f12bbdbf555f"
+  integrity sha1-mcp9clll+2VYFOr2XzjxK72/VV8=
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -5198,20 +5195,6 @@ prompts@^2.0.1:
   dependencies:
     kleur "^3.0.3"
     sisteransi "^1.0.3"
-
-psd@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/psd/-/psd-3.2.0.tgz#d721c40207d4c99d82fee4ae2d7cfca4fb073da8"
-  integrity sha512-T3xchHRLA0IuahyaX3Q4/Ml0nRbjWX5QIFw0JK2OxFBnCfJzZwFiGqJ4N93KHfvxuy0NXJdcvr1xYy6AKDVytw==
-  dependencies:
-    coffee-script "~ 1.7.1"
-    coffeescript-module "~ 0.2.1"
-    iconv-lite "~ 0.4.4"
-    jspack "~ 0.0.3"
-    lodash "~ 2.4"
-    parse-engine-data "~ 0.1"
-    pngjs "3.2.0"
-    rsvp "~ 3.0.6"
 
 psl@^1.1.24, psl@^1.1.28:
   version "1.7.0"
@@ -5627,15 +5610,10 @@ rimraf@^3.0.0:
   dependencies:
     glob "^7.1.3"
 
-rsvp@^4.8.4:
+rsvp@^4.8.4, rsvp@^4.8.5:
   version "4.8.5"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"
   integrity sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA==
-
-"rsvp@~ 3.0.6":
-  version "3.0.21"
-  resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.0.21.tgz#49c588fe18ef293bcd0ab9f4e6756e6ac433359f"
-  integrity sha1-ScWI/hjvKTvNCrn05nVuasQzNZ8=
 
 run-async@^2.2.0:
   version "2.3.0"
