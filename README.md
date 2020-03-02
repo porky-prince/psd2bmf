@@ -2,7 +2,7 @@
 
 这是一个直接将 psd 文件转换为 bmfont 的工具，只需要 UI 设计师提供一个 psd 文件即可，无需任何软件依赖以及没有繁琐的操作。
 
-[example-img]: docs/example.jpg
+[example-img]: docs/demo.jpg
 
 ![example][example-img]
 

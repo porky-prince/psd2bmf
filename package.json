@@ -4,9 +4,9 @@
 	"description": "Convert the psd to bmfont.",
 	"license": "MIT",
 	"author": "Porky Kay",
-	"homepage": "https://gitee.com/porky-prince/psd2bmf#readme",
-	"repository": "https://gitee.com/porky-prince/psd2bmf",
-	"bugs": "https://gitee.com/porky-prince/psd2bmf/issues",
+	"homepage": "https://github.com/porky-prince/psd2bmf#readme",
+	"repository": "https://github.com/porky-prince/psd2bmf",
+	"bugs": "https://github.com/porky-prince/psd2bmf/issues",
 	"main": "dist/main.js",
 	"bin": {
 		"psd2bmf": "bin/psd2bmf.js"
