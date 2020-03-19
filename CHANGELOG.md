@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.5](https://github.com/porky-prince/psd2bmf/compare/v1.1.4...v1.1.5) (2020-03-19)
+
+
+### Bug Fixes
+
+* modify package.json engines node >=8 ([6125259](https://github.com/porky-prince/psd2bmf/commit/61252595c6c173366a7fdff7ff99ae9497fef0ec))
+
 ### [1.1.4](https://github.com/porky-prince/psd2bmf/compare/v1.1.3...v1.1.4) (2020-03-02)
 
 ### [1.1.3](https://github.com/porky-prince/psd2bmf/compare/v1.1.2...v1.1.3) (2020-03-02)
