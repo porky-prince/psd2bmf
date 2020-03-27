@@ -1,6 +1,6 @@
 {
 	"name": "psd2bmf",
-	"version": "1.1.5",
+	"version": "1.1.6",
 	"description": "Convert the psd to bmfont.",
 	"license": "MIT",
 	"author": "Porky Kay",

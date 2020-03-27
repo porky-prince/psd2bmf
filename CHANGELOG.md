@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.6](https://github.com/porky-prince/psd2bmf/compare/v1.1.5...v1.1.6) (2020-03-27)
+
+
+### Bug Fixes
+
+* crlf to lf;upgrade dependencies;do more test ([0d8543a](https://github.com/porky-prince/psd2bmf/commit/0d8543ab15e87f4e9f81dc84517c3730d6a5b348))
+
 ### [1.1.5](https://github.com/porky-prince/psd2bmf/compare/v1.1.4...v1.1.5) (2020-03-19)
 
 
