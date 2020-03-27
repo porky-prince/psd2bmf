@@ -5,7 +5,7 @@ export default class Offset {
 
 	parse(offset) {
 		if (!offset) return;
-		let arr = offset.split(',').map(val => {
+		let arr = offset.split(',').map((val) => {
 			return parseInt(val, 10);
 		});
 		this.set.apply(this, arr);

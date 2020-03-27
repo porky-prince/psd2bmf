@@ -27,7 +27,7 @@ test('Test delay', () => {
 
 	async function delay(flag) {
 		if (flag) {
-			await new Promise(resolve => {
+			await new Promise((resolve) => {
 				setTimeout(() => {
 					resolve();
 				}, 1000);

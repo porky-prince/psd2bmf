@@ -1,39 +1,13 @@
-import path from 'path';
 import fs from 'fs-extra';
-import { FNT_EXT, PNG_EXT, PSD_EXT, ROOT } from '../src/const';
-import { exec } from 'child_process';
+import { FNT_EXT, PNG_EXT, PSD_EXT } from '../src/const';
+import { execCmd, getOutputFileMd5, HASH_JSON } from './helper';
 
-const ASSETS = path.join(__dirname, 'assets');
-const OUTPUT = path.join(__dirname, 'output');
-
-function input(filename) {
-	return path.join(ASSETS, filename + PSD_EXT);
-}
-
-function output(filename, extName) {
-	return path.join(OUTPUT, filename + extName);
-}
-
-async function execCmd(filename) {
-	return new Promise(resolve => {
-		exec(
-			`node bin/psd2bmf.js -i ${input(filename)} -o ${OUTPUT}`,
-			{
-				cwd: ROOT,
-			},
-			resolve
-		);
-	});
-}
-
-async function isExist(filename, extName) {
-	return new Promise(resolve => {
-		fs.exists(output(filename, extName), resolve);
-	});
-}
+let hashJson = null;
 
 async function judgeExist(filename, extName, flag) {
-	expect(await isExist(filename, extName)).toBe(flag);
+	const hash = await getOutputFileMd5(filename, extName);
+	expect(hash !== null).toBe(flag);
+	expect(hash ? hashJson[filename + extName] : hash).toBe(hash);
 }
 
 async function judgeExists(filename, flag) {
@@ -82,6 +56,14 @@ function testMultipleErr(filename, num) {
 }
 
 describe('Export', () => {
+	beforeAll(async () => {
+		console.log(
+			'If you change the code in the src folder and make sure you output the correct results,',
+			'please exec "yarn run hash" at first.'
+		);
+		hashJson = await fs.readJson(HASH_JSON);
+	});
+
 	testOne('export');
 
 	testOne('do_not_export');

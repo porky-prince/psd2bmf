@@ -4,3 +4,4 @@ node_modules
 .github
 CHANGELOG.md
 dist
+**/hash.json
