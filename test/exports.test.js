@@ -1,13 +1,9 @@
-import fs from 'fs-extra';
 import { FNT_EXT, PNG_EXT, PSD_EXT } from '../src/const';
-import { execCmd, getOutputFileMd5, HASH_JSON } from './helper';
-
-let hashJson = null;
+import { execCmd, getOutputFileMd5 } from './helper';
 
 async function judgeExist(filename, extName, flag) {
 	const hash = await getOutputFileMd5(filename, extName);
 	expect(hash !== null).toBe(flag);
-	expect(hash ? hashJson[filename + extName] : hash).toBe(hash);
 }
 
 async function judgeExists(filename, flag) {
@@ -61,7 +57,6 @@ describe('Export', () => {
 			'If you change the code in the src folder and make sure you output the correct results,',
 			'please exec "yarn run hash" at first.'
 		);
-		hashJson = await fs.readJson(HASH_JSON);
 	});
 
 	testOne('export');

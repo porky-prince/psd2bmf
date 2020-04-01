@@ -2,5 +2,5 @@ language: node_js
 node_js:
     - node
     - 'lts/*'
-    - '8.6.0'
+    - '10.0.0'
 cache: yarn

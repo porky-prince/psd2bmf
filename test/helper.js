@@ -1,6 +1,5 @@
 import path from 'path';
 import fs from 'fs-extra';
-import crypto from 'crypto';
 import { exec } from 'child_process';
 import { PSD_EXT, ROOT } from '../src/const';
 import { readFile } from '../src/utils';
@@ -19,19 +18,13 @@ function output(filename, extName) {
 	return path.join(OUTPUT, filename + extName);
 }
 
-function md5(data) {
-	const md5 = crypto.createHash('md5');
-	return md5.update(data).digest('hex');
-}
-
 export async function getOutputFileMd5(filename, extName) {
-	let hash = null;
-	const outputFile = output(filename, extName);
-	if (fs.existsSync(outputFile)) {
-		hash = md5(await readFile(outputFile));
+	const outputFile = await readFile(output(filename, extName));
+	if (outputFile !== null) {
+		return outputFile;
 	}
 
-	return hash;
+	return null;
 }
 
 export async function execCmd(filename) {
