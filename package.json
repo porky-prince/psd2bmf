@@ -30,6 +30,7 @@
 		"test": "jest",
 		"hash": "node --require=@babel/register test/helper.js --hash",
 		"build": "babel src -d dist --copy-files",
+		"prepare": "npm run build",
 		"release": "standard-version"
 	},
 	"devDependencies": {
