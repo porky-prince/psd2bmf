@@ -28,6 +28,7 @@
 		"lint": "npm-run-all -l -p \"lint:**\"",
 		"pretest": "npm run lint && del-cli test/output",
 		"test": "jest",
+		"test:coverage": "npm run test -- --collectCoverageFrom=\"src/**/*.js\" --coverage",
 		"hash": "node --require=@babel/register test/helper.js --hash",
 		"build": "babel src -d dist --copy-files",
 		"prepare": "npm run build",

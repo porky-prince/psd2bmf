@@ -1,8 +1,8 @@
 import path from 'path';
 import fs from 'fs-extra';
 import crypto from 'crypto';
-import { exec } from 'child_process';
-import { PSD_EXT, ROOT } from '../src/const';
+import { exec } from '../src/main';
+import { PSD_EXT } from '../src/const';
 import { readFile } from '../src/utils';
 
 const ASSETS = path.join(__dirname, 'assets');
@@ -34,15 +34,7 @@ export async function getOutputFileMd5(filename, extName) {
 }
 
 export async function execCmd(filename) {
-	return new Promise((resolve) => {
-		exec(
-			`node bin/psd2bmf.js -i ${input(filename)} -o ${OUTPUT}`,
-			{
-				cwd: ROOT,
-			},
-			resolve
-		);
-	});
+	await exec(input(filename), OUTPUT);
 }
 
 async function generateHash() {

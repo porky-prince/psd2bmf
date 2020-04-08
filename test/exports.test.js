@@ -38,7 +38,7 @@ function testMultiple(filename, num) {
 function testOneErr(filename) {
 	describe(`Test ${filename + PSD_EXT}`, () => {
 		test('There is no output', async () => {
-			await execCmd(filename);
+			await execCmd(filename).catch(() => {});
 			await judgeExists(filename, false);
 		});
 	});
@@ -47,7 +47,7 @@ function testOneErr(filename) {
 function testMultipleErr(filename, num) {
 	describe(`Test ${filename + PSD_EXT}`, () => {
 		test('There is no output', async () => {
-			await execCmd(filename);
+			await execCmd(filename).catch(() => {});
 			for (let i = 0; i < num; i++) {
 				await judgeExists(filename + '_' + i, false);
 			}

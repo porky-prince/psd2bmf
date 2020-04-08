@@ -85,7 +85,11 @@ export async function writePng(pngPath, pngData) {
 			if (err) {
 				reject();
 			} else {
-				pngData.pack().pipe(fs.createWriteStream(pngPath)).on('end', resolve);
+				pngData
+					.pack()
+					.pipe(fs.createWriteStream(pngPath))
+					.on('close', resolve)
+					.on('error', reject);
 			}
 		});
 	});

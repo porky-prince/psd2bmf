@@ -213,7 +213,7 @@ async function exportFnt(exportOpt, layoutInfo, filename, outputPath) {
 }
 
 export async function exec(psdPath, output, filename, inputPng) {
-	let opt = new Option();
+	const opt = new Option();
 	opt.input = psdPath;
 	opt.output = output;
 	opt.filename = filename;
