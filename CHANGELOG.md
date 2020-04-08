@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.7](https://github.com/porky-prince/psd2bmf/compare/v1.1.6...v1.1.7) (2020-04-08)
+
+
+### Bug Fixes
+
+* fix bug that export png file no call resolve callback ([c7f6f40](https://github.com/porky-prince/psd2bmf/commit/c7f6f407876a04805c61b5b36430dd3d7dee2142))
+
 ### [1.1.6](https://github.com/porky-prince/psd2bmf/compare/v1.1.5...v1.1.6) (2020-03-27)
 
 
