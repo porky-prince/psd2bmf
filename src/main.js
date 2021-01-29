@@ -13,7 +13,7 @@ async function runTask(option) {
 	psd.parse();
 	let srcPng = await readPng(option.inputPng);
 	if (srcPng === null) {
-		console.warn('Png image exported with PhotoShop are of higher quality.');
+		console.warn('warn: Png image exported with PhotoShop are of higher quality.');
 		srcPng = createPng(psd.image.width(), psd.image.height());
 		srcPng.data = Buffer.from(psd.image.pixelData);
 	}
@@ -27,7 +27,11 @@ async function runTask(option) {
 		if (Group.canExport(child)) {
 			const group = new Group(option);
 			group.init(exportCount++, child);
-			groups.push(group);
+			if (group.layers.length === 0) {
+				console.warn(`warn: Group ${group.index} is empty.`);
+			} else {
+				groups.push(group);
+			}
 		}
 	}
 
